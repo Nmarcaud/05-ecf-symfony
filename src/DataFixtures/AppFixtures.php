@@ -6,10 +6,18 @@ use Faker\Factory;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+
+    // Ajout d'un encoder de password
+    public function __construct(UserPasswordHasherInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
+    public function load( ObjectManager $manager)
     {
         // $product = new Product();
         // $manager->persist($product);
@@ -18,11 +26,13 @@ class AppFixtures extends Fixture
 
         // Admin
         $admin = new User;
+        
+        $hash = $this->encoder->hashPassword($admin, "password");
 
         $admin->setFirstname("'Nicolas")
         ->setLastname('Marcaud')
         ->setEmail("nmarcau@gmail.com")
-        ->setPassword("password")
+        ->setPassword($hash)
         ->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($admin);
@@ -32,10 +42,12 @@ class AppFixtures extends Fixture
 
             $user = new User();
 
+            $hash = $this->encoder->hashPassword($user, "password");
+
             $user->setFirstname($faker->firstName())
                 ->setLastname($faker->lastName())
                 ->setEmail("user_$u@gmail.com")
-                ->setPassword("password");
+                ->setPassword($hash);
             
             $manager->persist($user);
         }
