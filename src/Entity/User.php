@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -20,22 +22,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $firstname;
@@ -44,6 +30,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modifiedAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Skill::class, inversedBy="users")
+     */
+    private $skills;
+
+    public function __construct()
+    {
+        $this->skills = new ArrayCollection();
+    }
+
+  
 
     public function getId(): ?int
     {
@@ -154,6 +188,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): ?\DateTimeInterface
+    {
+        return $this->modifiedAt;
+    }
+
+    public function setModifiedAt(?\DateTimeInterface $modifiedAt): self
+    {
+        $this->modifiedAt = $modifiedAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        $this->skills->removeElement($skill);
 
         return $this;
     }

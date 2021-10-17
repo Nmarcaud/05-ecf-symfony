@@ -33,12 +33,15 @@ class AppFixtures extends Fixture
         ->setLastname('Marcaud')
         ->setEmail("nmarcau@gmail.com")
         ->setPassword($hash)
-        ->setRoles(['ROLE_ADMIN']);
+        ->setRoles(['ROLE_ADMIN'])
+        ->setPhone($faker->phoneNumber())
+        ->setAdresse($faker->address())
+        ->setCreatedAt($faker->dateTime());
 
         $manager->persist($admin);
 
         // Utilisateurs
-        for($u = 0; $u < 5; $u++) {
+        for($u = 0; $u < 10; $u++) {
 
             $user = new User();
 
@@ -47,7 +50,10 @@ class AppFixtures extends Fixture
             $user->setFirstname($faker->firstName())
                 ->setLastname($faker->lastName())
                 ->setEmail("user_$u@gmail.com")
-                ->setPassword($hash);
+                ->setPassword($hash)
+                ->setAdresse($faker->address())
+                ->setPhone($faker->phoneNumber())
+                ->setCreatedAt($faker->dateTime());
             
             $manager->persist($user);
         }
