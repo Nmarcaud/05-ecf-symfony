@@ -24,56 +24,121 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
 
         // Admin
-        $status = new Status;
-        $status->setName("'Administrateur");
-        $manager->persist($status);
-        $status = new Status;
-        $status->setName("'Collaborateur");
-        $manager->persist($status);
-        $status = new Status;
-        $status->setName("'Commercial");
-        $manager->persist($status);
-        $status = new Status;
-        $status->setName("'Candidat");
-        $manager->persist($status);
+       
+        
+        
 
+        $manager->flush();
 
         // Init Faker to FR
         $faker = Factory::create('fr_FR');
 
+
+        
         // Admin
+        // Création Status Administrateur
+        $status = new Status;
+        $status->setName("Administrateur");
+        $manager->persist($status);
+
         $admin = new User;
         
+        // Mot de passe encodé
         $hash = $this->encoder->hashPassword($admin, "password");
 
         $admin->setFirstname("'Nicolas")
         ->setLastname('Marcaud')
-        ->setEmail("nmarcau@gmail.com")
+        ->setEmail("admin@gmail.com")
         ->setPassword($hash)
         ->setRoles(['ROLE_ADMIN'])
         ->setPhone($faker->phoneNumber())
         ->setAdresse($faker->address())
+        ->setStatus($status)
         ->setCreatedAt($faker->dateTime());
 
         $manager->persist($admin);
 
+
+
         // Utilisateurs
+        // Création Status Collaborateur
+        $status = new Status;
+        $status->setName("Collaborateur");
+        $manager->persist($status);
+
         for($u = 0; $u < 10; $u++) {
 
             $user = new User();
 
+            // Mot de passe encodé
             $hash = $this->encoder->hashPassword($user, "password");
 
             $user->setFirstname($faker->firstName())
                 ->setLastname($faker->lastName())
-                ->setEmail("user_$u@gmail.com")
+                ->setEmail("collaborateur_$u@gmail.com")
                 ->setPassword($hash)
                 ->setAdresse($faker->address())
                 ->setPhone($faker->phoneNumber())
+                ->setStatus($status)
                 ->setCreatedAt($faker->dateTime());
             
             $manager->persist($user);
         }
+
+
+
+        // Commerciaux
+        // Création Status Commercial
+        $status = new Status;
+        $status->setName("Commercial");
+        $manager->persist($status);
+
+        for($u = 0; $u < 10; $u++) {
+
+            $user = new User();
+
+            // Mot de passe encodé
+            $hash = $this->encoder->hashPassword($user, "password");
+
+            $user->setFirstname($faker->firstName())
+                ->setLastname($faker->lastName())
+                ->setEmail("commercial_$u@gmail.com")
+                ->setPassword($hash)
+                ->setAdresse($faker->address())
+                ->setPhone($faker->phoneNumber())
+                ->setStatus($status)
+                ->setCreatedAt($faker->dateTime());
+            
+            $manager->persist($user);
+        }
+
+
+
+        // Candidats
+        // Création Status Candidat
+        $status = new Status;
+        $status->setName("Candidat");
+        $manager->persist($status);
+
+        for($u = 0; $u < 10; $u++) {
+
+            $user = new User();
+
+            // Mot de passe encodé
+            $hash = $this->encoder->hashPassword($user, "password");
+
+            $user->setFirstname($faker->firstName())
+                ->setLastname($faker->lastName())
+                ->setEmail("candidat_$u@gmail.com")
+                ->setPassword($hash)
+                ->setAdresse($faker->address())
+                ->setPhone($faker->phoneNumber())
+                ->setStatus($status)
+                ->setCreatedAt($faker->dateTime());
+            
+            $manager->persist($user);
+        }
+
         $manager->flush();
     }
 }
