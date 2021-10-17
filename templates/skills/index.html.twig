@@ -6,20 +6,44 @@
 
     <div class="container">
 
-        <h1>Liste des compétences</h1>
+        <!-- Titre et Action -->
+        <div class="row d-flex align-items-center my-4">
+            <div class="col">
+                <h1>Liste des compétences</h1>
+            </div>
+            <div class="col text-end">
+                <button class="btn btn-primary" href="{{ path ('skills_create')}}">Ajouter une compétence</button>
+            </div>
+        </div>
         
+        <!-- En tête tableau -->
+        <div class="row my-2 py-1">
+            <div class="col">
+                <strong>Id</strong>
+            </div>
+            <div class="col">
+                <strong>Nom</strong>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        <!-- Tableau -->
         {% for skill in skills %}
-            
             <!-- Row Skill -->
-            <div class="row">
+            <div class="row d-flex align-items-center my-2 py-1 rounded table-row">
                 <div class="col">
                     {{ skill.id }}
                 </div>
                 <div class="col">
                     {{ skill.name }}
                 </div>
-                <div class="col">
-                    <p>action</p>
+                <div class="col text-end">
+                    <button class="btn btn-outline-success px-3">
+						<i class="far fa-pen"></i>
+					</button>
+					<button class="btn btn-outline-danger px-3">
+						<i class="far fa-times"></i>
+					</button>
                 </div>
             </div>
 

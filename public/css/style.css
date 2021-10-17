@@ -5,6 +5,14 @@
     border-radius: 50%;
 }
 
-.table-row:nth-child(even) {
+.table-row:nth-child(odd) {
     background-color: #f1f1f1;
+}
+
+.table-row {
+    transition: .4s;
+}
+.table-row:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 0 #f1f1f1;
 }
