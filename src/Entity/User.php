@@ -78,9 +78,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $status;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="user")
+     */
+    private $experiences;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
     }
 
   
@@ -278,6 +284,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setStatus(?Status $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Experience[]
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences[] = $experience;
+            $experience->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->removeElement($experience)) {
+            // set the owning side to null (unless already changed)
+            if ($experience->getUser() === $this) {
+                $experience->setUser(null);
+            }
+        }
 
         return $this;
     }
