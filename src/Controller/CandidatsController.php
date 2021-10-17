@@ -28,4 +28,12 @@ class CandidatsController extends AbstractController
             "candidats" => $listCandidats
         ]);
     }
+
+    /**
+     * @Route("/add", name="add_candidats")
+     */
+    public function add()
+    {
+        // TO DO - Form
+    }
 }
