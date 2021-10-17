@@ -72,6 +72,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $skills;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $status;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -260,6 +266,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeSkill(Skill $skill): self
     {
         $this->skills->removeElement($skill);
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
