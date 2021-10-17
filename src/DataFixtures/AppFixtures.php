@@ -29,10 +29,9 @@ class AppFixtures extends Fixture
 
         // Init Faker to FR
         $faker = Factory::create('fr_FR');
-
-        // Plus de pertinence pour les expériences
+        // Plus de pertinence pour les expériences et entreprises
         $faker->addProvider(new \Bezhanov\Faker\Provider\Educator($faker));
-
+        $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
 
 
         // Entreprises
@@ -90,6 +89,7 @@ class AppFixtures extends Fixture
         ->setPhone($faker->phoneNumber())
         ->setAdresse($faker->address())
         ->setStatus($status)
+        ->setPictureUrl($faker->imageUrl(500,500, true))
         ->setCreatedAt($faker->dateTime());
 
         $manager->persist($admin);
@@ -116,6 +116,7 @@ class AppFixtures extends Fixture
                 ->setAdresse($faker->address())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
+                ->setPictureUrl($faker->imageUrl(500,500, true))
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random
@@ -146,6 +147,7 @@ class AppFixtures extends Fixture
                 ->setAdresse($faker->address())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
+                ->setPictureUrl($faker->imageUrl(500,500, true))
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random
@@ -176,6 +178,7 @@ class AppFixtures extends Fixture
                 ->setAdresse($faker->address())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
+                ->setPictureUrl($faker->imageUrl(500,500, true))
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random

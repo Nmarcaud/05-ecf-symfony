@@ -1,30 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CollaborateurController!{% endblock %}
+{% block title %}Hello CollaborateurController!
+{% endblock %}
 
 {% block body %}
-    <div class="container">
+	<div class="container">
 
-        <h1>Liste des Collaborateurs</h1>
-        
-        {% for collaborateur in collaborateurs %}
-            
-            <!-- Row Skill -->
-            <div class="row">
-                <div class="col">
-                    {{ collaborateur.id }}
-                </div>
-                <div class="col">
-                    {{ collaborateur.firstname }}
-                </div>
-                <div class="col">
-                    {{ collaborateur.lastname }}
-                </div>
-                <div class="col">
-                    <p>action</p>
-                </div>
+		<h1 class="my-4">Liste des Collaborateurs</h1>
+
+        <!-- En tête tableau -->
+        <div class="row my-2 py-1">
+            <div class="col"></div>
+            <div class="col">
+                <strong>Id</strong>
             </div>
+            <div class="col">
+                <strong>Prénom</strong>
+            </div>
+            <div class="col">
+                <strong>Nom</strong>
+            </div>
+            <div class="col">
+                <strong>Status</strong>
+            </div>
+            <div class="col"></div>
+        </div>
+        
+		{% for c in collaborateurs %}
 
-        {% endfor %}
-    </div>
+			<!-- Row Skill -->
+			<div class="row d-flex align-items-center my-2 py-1 rounded table-row">
+				<div class="col">
+					<img src="{{ c.pictureUrl }}" alt="{{ c.firstname }} {{ c.lastname }}" class="table-img">
+				</div>
+				<div class="col">
+					{{ c.id }}
+				</div>
+				<div class="col">
+					{{ c.firstname }}
+				</div>
+				<div class="col">
+					{{ c.lastname }}
+				</div>
+				<div class="col">
+					{{ c.status.name }}
+				</div>
+				<div class="col">
+					<button class="btn btn-outline-success px-3">
+						<i class="far fa-user-edit"></i>
+					</button>
+					<button class="btn btn-outline-danger px-3">
+						<i class="far fa-user-times"></i>
+					</button>
+				</div>
+			</div>
+
+		{% endfor %}
+	</div>
 {% endblock %}

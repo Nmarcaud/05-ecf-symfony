@@ -5,26 +5,54 @@
 {% block body %}
     <div class="container">
 
-        <h1>Liste des Candidats</h1>
-        
-        {% for candidat in candidats %}
+        <h1 class="my-4">Liste des Candidats</h1>
+
+        <!-- En tête tableau -->
+        <div class="row my-2 py-1">
+            <div class="col"></div>
+            <div class="col">
+                <strong>Id</strong>
+            </div>
+            <div class="col">
+                <strong>Prénom</strong>
+            </div>
+            <div class="col">
+                <strong>Nom</strong>
+            </div>
+            <div class="col">
+                <strong>Status</strong>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        {% for c in candidats %}
             
             <!-- Row Skill -->
-            <div class="row">
+            <div class="row d-flex align-items-center my-2 py-1 rounded table-row">
                 <div class="col">
-                    {{ candidat.id }}
+                    <img src="{{ c.pictureUrl }}" alt="{{ c.firstname }} {{ c.lastname }}" class="table-img">
                 </div>
                 <div class="col">
-                    {{ candidat.firstname }}
+                    {{ c.id }}
                 </div>
                 <div class="col">
-                    {{ candidat.lastname }}
+                    {{ c.firstname }}
                 </div>
                 <div class="col">
-                    <p>action</p>
+                    {{ c.lastname }}
+                </div>
+                <div class="col">
+                    {{ c.status.name }}
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-success px-3"><i class="far fa-user-edit"></i></button>
+                    <button class="btn btn-outline-danger px-3"><i class="far fa-user-times"></i></button>
                 </div>
             </div>
+            
 
         {% endfor %}
+
+        
     </div>
 {% endblock %}
