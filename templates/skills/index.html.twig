@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compétences{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Liste des compétences</h1>
+        
+        {% for skill in skills %}
+            
+            <!-- Row Skill -->
+            <div class="row">
+                <div class="col">
+                    {{ skill.id }}
+                </div>
+                <div class="col">
+                    {{ skill.name }}
+                </div>
+                <div class="col">
+                    <p>action</p>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+{% endblock %}

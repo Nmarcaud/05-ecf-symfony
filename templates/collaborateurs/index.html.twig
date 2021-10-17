@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CollaborateurController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <h1>Liste des Collaborateurs</h1>
+        
+        {% for collaborateur in collaborateurs %}
+            
+            <!-- Row Skill -->
+            <div class="row">
+                <div class="col">
+                    {{ collaborateur.id }}
+                </div>
+                <div class="col">
+                    {{ collaborateur.firstname }}
+                </div>
+                <div class="col">
+                    {{ collaborateur.lastname }}
+                </div>
+                <div class="col">
+                    <p>action</p>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+{% endblock %}
