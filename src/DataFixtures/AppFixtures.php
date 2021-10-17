@@ -6,6 +6,7 @@ use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Skill;
 use App\Entity\Status;
+use App\Entity\Entreprise;
 use App\Entity\Experience;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -32,15 +33,34 @@ class AppFixtures extends Fixture
         // Plus de pertinence pour les expériences
         $faker->addProvider(new \Bezhanov\Faker\Provider\Educator($faker));
 
+
+
+        // Entreprises
+        /* Je génère d'abord une liste d'entreprises pour ensuite en choisir une au hasard et lui assigner une expérience */
+        $listEntreprises = array();
+        for ($e = 0; $e < 15; $e++) {
+            
+            $entreprise = new Entreprise;
+            $entreprise->setName($faker->university())
+                ->setCreatedAt($faker->dateTime());
+            
+            // Ajout à la liste pour réutilisation dans " experience "
+            array_push($listEntreprises, $entreprise);
+            $manager->persist($entreprise);
+        }
+
+
+
         // Function experience
-        function addXp($faker, $user, $manager) {
+        /* Je génère un nbre random d'expériences / La focntion me permet de la réultilser pur chaque type de status */
+        function addXp($faker, $user, $manager, $listEntreprises) {
 
             // Ajout d'expériences Random
             $nbExp = rand(1, 8);
             for ($e = 1; $e <= $nbExp; $e++) {
                 $experience = new Experience();
 
-                $experience->setName($faker->university())
+                $experience->setEntreprise($listEntreprises[rand(0, count($listEntreprises)-1)])
                     ->setDescription($faker->course())
                     ->setUser($user)
                     ->setCreatedAt($faker->dateTime());
@@ -49,6 +69,8 @@ class AppFixtures extends Fixture
             }
         }
         
+
+
         // Admin
         // Création Status Administrateur
         $status = new Status;
@@ -97,7 +119,7 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random
-            addXp($faker, $user, $manager);
+            addXp($faker, $user, $manager, $listEntreprises);
             
             $manager->persist($user);
         }
@@ -127,7 +149,7 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random
-            addXp($faker, $user, $manager);
+            addXp($faker, $user, $manager, $listEntreprises);
             
             $manager->persist($user);
         }
@@ -157,7 +179,7 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random
-            addXp($faker, $user, $manager);
+            addXp($faker, $user, $manager, $listEntreprises);
             
             $manager->persist($user);
         }

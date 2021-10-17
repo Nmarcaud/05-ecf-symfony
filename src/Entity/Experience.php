@@ -18,11 +18,6 @@ class Experience
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $description;
@@ -42,21 +37,14 @@ class Experience
      */
     private $createdAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="experiences")
+     */
+    private $Entreprise;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getDescription(): ?string
@@ -103,6 +91,18 @@ class Experience
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getEntreprise(): ?Entreprise
+    {
+        return $this->Entreprise;
+    }
+
+    public function setEntreprise(?Entreprise $Entreprise): self
+    {
+        $this->Entreprise = $Entreprise;
 
         return $this;
     }
