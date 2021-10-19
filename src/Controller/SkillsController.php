@@ -81,5 +81,18 @@ class SkillsController extends AbstractController
             'skill' => $skill
         ]);
     }
+
+
+    /**
+     * @Route("/{id}/delete", name="skills_delete")
+     */
+    public function delete($id, SkillRepository $skillRepository, EntityManagerInterface $em): Response
+    {
+        $skill = $skillRepository->find($id);
+        $em->remove($skill);
+        $em->flush();
+        
+        return $this->redirectToRoute('skills', [], Response::HTTP_SEE_OTHER);
+    }
 }
 

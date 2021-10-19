@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 
@@ -68,11 +68,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Skill::class, inversedBy="users")
-     */
-    private $skills;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -88,10 +83,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $pictureUrl;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserSkill::class, mappedBy="user")
+     */
+    private $userSkills;
+
     public function __construct()
     {
-        $this->skills = new ArrayCollection();
         $this->experiences = new ArrayCollection();
+        $this->userSkills = new ArrayCollection();
     }
 
   
@@ -257,30 +257,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Skill[]
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(Skill $skill): self
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills[] = $skill;
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(Skill $skill): self
-    {
-        $this->skills->removeElement($skill);
-
-        return $this;
-    }
-
     public function getStatus(): ?Status
     {
         return $this->status;
@@ -331,6 +307,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPictureUrl(?string $pictureUrl): self
     {
         $this->pictureUrl = $pictureUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserSkill[]
+     */
+    public function getUserSkills(): Collection
+    {
+        return $this->userSkills;
+    }
+
+    public function addUserSkill(UserSkill $userSkill): self
+    {
+        if (!$this->userSkills->contains($userSkill)) {
+            $this->userSkills[] = $userSkill;
+            $userSkill->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserSkill(UserSkill $userSkill): self
+    {
+        if ($this->userSkills->removeElement($userSkill)) {
+            // set the owning side to null (unless already changed)
+            if ($userSkill->getUser() === $this) {
+                $userSkill->setUser(null);
+            }
+        }
 
         return $this;
     }

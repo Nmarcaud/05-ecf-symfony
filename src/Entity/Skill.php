@@ -35,13 +35,18 @@ class Skill
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="skills")
+     * @ORM\OneToMany(targetEntity=UserSkill::class, mappedBy="skill")
      */
-    private $users;
+    private $userSkills;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->userSkills = new ArrayCollection();
+    }
+    public function __toString()
+    {
+        return (string) $this->getName();
     }
 
 
@@ -87,27 +92,30 @@ class Skill
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|UserSkill[]
      */
-    public function getUsers(): Collection
+    public function getUserSkills(): Collection
     {
-        return $this->users;
+        return $this->userSkills;
     }
 
-    public function addUser(User $user): self
+    public function addUserSkill(UserSkill $userSkill): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addSkill($this);
+        if (!$this->userSkills->contains($userSkill)) {
+            $this->userSkills[] = $userSkill;
+            $userSkill->setSkill($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removeUserSkill(UserSkill $userSkill): self
     {
-        if ($this->users->removeElement($user)) {
-            $user->removeSkill($this);
+        if ($this->userSkills->removeElement($userSkill)) {
+            // set the owning side to null (unless already changed)
+            if ($userSkill->getSkill() === $this) {
+                $userSkill->setSkill(null);
+            }
         }
 
         return $this;
