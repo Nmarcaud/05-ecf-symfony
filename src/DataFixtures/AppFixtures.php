@@ -62,6 +62,8 @@ class AppFixtures extends Fixture
                 $experience->setEntreprise($listEntreprises[rand(0, count($listEntreprises)-1)])
                     ->setDescription($faker->course())
                     ->setUser($user)
+                    ->setStartDate($faker->dateTime())
+                    ->setEndDate($faker->dateTime())
                     ->setCreatedAt($faker->dateTime());
                 
                 $manager->persist($experience);
