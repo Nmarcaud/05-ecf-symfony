@@ -50,11 +50,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $adresse;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $phone;
 
     /**
@@ -87,6 +82,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=UserSkill::class, mappedBy="user")
      */
     private $userSkills;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $zip_code;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $apside_birthday;
 
     public function __construct()
     {
@@ -209,18 +224,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?string $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
     public function getPhone(): ?string
     {
         return $this->phone;
@@ -337,6 +340,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $userSkill->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getZipCode(): ?string
+    {
+        return $this->zip_code;
+    }
+
+    public function setZipCode(?string $zip_code): self
+    {
+        $this->zip_code = $zip_code;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getApsideBirthday(): ?\DateTimeInterface
+    {
+        return $this->apside_birthday;
+    }
+
+    public function setApsideBirthday(?\DateTimeInterface $apside_birthday): self
+    {
+        $this->apside_birthday = $apside_birthday;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Skill;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,9 +18,11 @@ class CandidatType extends AbstractType
             ->add('lastname')
             ->add('email')
             ->add('adresse')
+            ->add('zip_code')
+            ->add('city')
             ->add('phone')
             // ->add('pictureUrl')
-            ->add('skills')
+            // ->add('userSkills')
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter la compétence'
             ]);
