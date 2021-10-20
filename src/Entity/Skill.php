@@ -39,6 +39,11 @@ class Skill
      */
     private $userSkills;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="skills")
+     */
+    private $category;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -117,6 +122,18 @@ class Skill
                 $userSkill->setSkill(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

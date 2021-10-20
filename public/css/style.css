@@ -16,3 +16,11 @@
     transform: translateY(-5px);
     box-shadow: 0 5px 0 #f1f1f1;
 }
+
+
+.profil-picture {
+    border-radius: 50%;
+    width: 5em;
+    height: 5em;
+    object-fit: cover;
+}

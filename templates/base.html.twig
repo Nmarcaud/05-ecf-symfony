@@ -11,6 +11,7 @@
             <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-rqn26AG5Pj86AF4SO72RK5fyefcQ/x32DNQfChxWvbXIyXFePlEktwD18fEz+kQU" crossorigin="anonymous">
 
             <link rel="stylesheet" href="/css/style.css">
+            <link rel="stylesheet" href="/css/flatcolor.css">
         {% endblock %}
 
         {% block javascripts %}
@@ -28,6 +29,9 @@
             <!-- Sous Menu -->
             <div class="col-2 navbar navbar-light bg-light lateral-nav align-items-start">
                 <nav class="navbar-nav flex-column p-2">
+
+                    <a class="nav-link" href="{{ path('profil', {'id': 392}) }}"><i class="far fa-user fa-fw"></i> Profil</a>
+
                     <a class="nav-link" href="{{ path('collaborateurs') }}"><i class="far fa-users fa-fw"></i> Collaborateurs</a>
                     <a class="nav-link" href="{{ path('candidats') }}"><i class="far fa-handshake fa-fw"></i> Candidats</a>
                     <a class="nav-link" href="{{ path('skills')}}"><i class="far fa-user-graduate fa-fw"></i> Compétences</a>

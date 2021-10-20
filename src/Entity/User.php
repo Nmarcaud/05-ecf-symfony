@@ -86,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $zip_code;
+    private $zipCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -101,7 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $apside_birthday;
+    private $apsideBirthday;
 
     public function __construct()
     {
@@ -346,12 +346,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getZipCode(): ?string
     {
-        return $this->zip_code;
+        return $this->zipCode;
     }
 
-    public function setZipCode(?string $zip_code): self
+    public function setZipCode(?string $zipCode): self
     {
-        $this->zip_code = $zip_code;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
@@ -382,12 +382,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getApsideBirthday(): ?\DateTimeInterface
     {
-        return $this->apside_birthday;
+        return $this->apsideBirthday;
     }
 
-    public function setApsideBirthday(?\DateTimeInterface $apside_birthday): self
+    public function setApsideBirthday(?\DateTimeInterface $apsideBirthday): self
     {
-        $this->apside_birthday = $apside_birthday;
+        $this->apsideBirthday = $apsideBirthday;
 
         return $this;
     }

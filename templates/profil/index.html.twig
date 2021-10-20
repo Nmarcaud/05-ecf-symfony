@@ -3,18 +3,82 @@
 {% block title %}Hello ProfilController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{{ dump(profil) }}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Infos col -->
+            <div class="col-12 col-lg-4 col-xl-3">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/nicolasmarcaud/Desktop/htdocs/05-ecf-symfony/operator-skills/src/Controller/ProfilController.php'|file_link(0) }}">src/Controller/ProfilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/nicolasmarcaud/Desktop/htdocs/05-ecf-symfony/operator-skills/templates/profil/index.html.twig'|file_link(0) }}">templates/profil/index.html.twig</a></code></li>
-    </ul>
-</div>
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row text-center">
+                            <div class="col-12 my-3">
+                                <img src="{{ profil.pictureUrl }}" alt="{{ profil.firstname }} {{ profil.lastname }}" class="profil-picture">
+                            </div>
+                            <div class="col-12">
+                                <h2 class="fs-4">{{ profil.firstname }} {{ profil.lastname|upper }}</h2>
+                            </div>
+                            <div class="col-12">
+                                <p class="text-danger mb-0">Emploi</p>
+                                <em class="text-muted">Expérience actuelle ? Pas de date de fin ?</em>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Adresse -->
+                            <div class="col-12 my-3">
+                                <p class="mb-0">Adresse</p>
+                                <small class="dg-1">{{ profil.adresse }}</small>
+                            </div>
+
+                            <!-- Code Postal -->
+                            <div class="col-12 my-3">
+                                <p class="mb-0">Code Postal</p>
+                                <small class="dg-1">{{ profil.zipCode }}</small>
+                            </div>
+
+                            <!-- Ville -->
+                            <div class="col-12 my-3">
+                                <p class="mb-0">Ville</p>
+                                <small class="dg-1">{{ profil.city }}</small>
+                            </div>
+
+                            <!-- Date Anniversaire -->
+                            <div class="col-12 my-3">
+                                <p class="mb-0">Anniversaire Apside</p>
+                                <small class="dg-1">{{ profil.apsideBirthday }}</small>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-12 my-3">
+                                <p class="mb-0">Email</p>
+                                <small class="dg-1">{{ profil.email }}</small>
+                            </div>
+
+                            <!-- Téléphone -->
+                            <div class="col-12 my-3">
+                                <p class="mb-0">Téléphone</p>
+                                <small class="dg-1">{{ profil.phone }}</small>
+                            </div>
+
+                            <!-- Compétences Principales -->
+                            <div class="col-12 my-3">
+                                <p class="mb-1">Compétences Principales</p>
+                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Php</span>
+                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Pyhton</span>
+                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Symfony</span>
+                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Php</span>
+                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Pyhton</span>
+                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Symfony</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
