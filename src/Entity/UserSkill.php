@@ -37,6 +37,11 @@ class UserSkill
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $level;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class UserSkill
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }

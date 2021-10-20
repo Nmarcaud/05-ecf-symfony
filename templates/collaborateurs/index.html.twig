@@ -46,12 +46,9 @@
 					{{ c.status.name }}
 				</div>
 				<div class="col text-end">
-					<button class="btn btn-outline-success px-3">
-						<i class="far fa-user-edit"></i>
-					</button>
-					<button class="btn btn-outline-danger px-3">
-						<i class="far fa-user-times"></i>
-					</button>
+					<a class="blue-2 mx-1" href="{{ path('profil', {'id': c.id}) }}"><i class="far fa-user-tag"></i></a>
+                    <a class="grass-2 mx-1" href="{# path ('collaborateurs_edit', {'id': c.id})#}"><i class="far fa-user-edit"></i></a>
+                    <a class="grape-2 mx-1" href="{# path ('collaborateurs_delete', {'id': c.id})#}"><i class="far fa-user-times"></i></a>
 				</div>
 			</div>
 

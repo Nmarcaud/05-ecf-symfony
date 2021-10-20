@@ -24,3 +24,13 @@
     height: 5em;
     object-fit: cover;
 }
+
+.card {
+    border-radius: 1em;
+    transition: .4s;
+}
+
+.card-profil:hover {
+    transform: scale(1.05);
+}
+
