@@ -3,9 +3,8 @@
 {% block title %}Hello ProfilController!{% endblock %}
 
 {% block body %}
-{{ dump(profil) }}
 
-    <div class="container-fluid">
+    <div class="container-fluid py-4">
         <div class="row">
             <!-- Infos col -->
             <div class="col-12 col-lg-4 col-xl-3">
@@ -13,14 +12,12 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <div class="row text-center">
-                            <div class="col-12 my-3">
+                        <div class="row text-lg-center d-flex align-items-center">
+                            <div class="col-auto col-lg-12 my-3 text-center">
                                 <img src="{{ profil.pictureUrl }}" alt="{{ profil.firstname }} {{ profil.lastname }}" class="profil-picture">
                             </div>
-                            <div class="col-12">
+                            <div class="col col-lg-12">
                                 <h2 class="fs-4">{{ profil.firstname }} {{ profil.lastname|upper }}</h2>
-                            </div>
-                            <div class="col-12">
                                 <p class="text-danger mb-0">Emploi</p>
                                 <em class="text-muted">Expérience actuelle ? Pas de date de fin ?</em>
                             </div>
@@ -35,13 +32,13 @@
                             </div>
 
                             <!-- Code Postal -->
-                            <div class="col-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12 my-3">
                                 <p class="mb-0">Code Postal</p>
                                 <small class="dg-1">{{ profil.zipCode }}</small>
                             </div>
 
                             <!-- Ville -->
-                            <div class="col-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12 my-3">
                                 <p class="mb-0">Ville</p>
                                 <small class="dg-1">{{ profil.city }}</small>
                             </div>
@@ -53,13 +50,13 @@
                             </div>
 
                             <!-- Email -->
-                            <div class="col-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12 my-3">
                                 <p class="mb-0">Email</p>
                                 <small class="dg-1">{{ profil.email }}</small>
                             </div>
 
                             <!-- Téléphone -->
-                            <div class="col-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12 my-3">
                                 <p class="mb-0">Téléphone</p>
                                 <small class="dg-1">{{ profil.phone }}</small>
                             </div>
@@ -67,12 +64,13 @@
                             <!-- Compétences Principales -->
                             <div class="col-12 my-3">
                                 <p class="mb-1">Compétences Principales</p>
-                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Php</span>
-                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Pyhton</span>
-                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Symfony</span>
-                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Php</span>
-                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Pyhton</span>
-                                <span class="badge rounded-pill bg-light text-dark p-2 m-1">Symfony</span>
+
+                                {% for skill in profil.userSkills %}
+                                    {% if skill.level >= 4 %}
+                                        <span class="badge rounded-pill bg-bule-2 p-2 m-1">{{ skill.skill.name }}</span>
+                                    {% endif %}
+                                {% endfor %}
+                                
                             </div>
 
                         </div>
@@ -80,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-8 col-xl-9">
+            <div class="col-12 col-lg-8 col-xl-9 my-3">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="skill-tab" data-bs-toggle="tab" data-bs-target="#skill" type="button" role="tab" aria-controls="skill" aria-selected="true">Compétences</button>
@@ -96,15 +94,15 @@
                     <div class="tab-pane fade show active" id="skill" role="tabpanel" aria-labelledby="skill-tab">
 
                         {% for category in categories %}
-                            <div class="row g-3">
+                            <div class="row mb-3 g-3">
 
                                 <div class="col-12">
                                     <h4>{{ category.name }}</h4>
                                 </div>
-                                
+
                                 {% for skill in profil.userSkills %}
                                     {% if category.name == skill.skill.category.name %}
-                                        <div class="col">
+                                        <div class="col-12 col-md-6 col-xl-4">
                                             <div class="card">
                                                 <div class="card-body">
 
@@ -118,7 +116,7 @@
                                                                 {% endif %}
                                                             </h4>
                                                         </div>
-                                                        <div class="col text-end">
+                                                        <div class="col-auto text-end">
                                                             <a class="grape-2" href="{{ path ('user_skills_delete', {'user_skill_id': skill.id})}}"><i class="far fa-times"></i></a>
                                                         </div>
                                                     </div>
@@ -139,15 +137,36 @@
 
                         {% endfor %}
 
-                       
-
-
-                        
-                            
+                        <div class="row mb-3 g-3">
+                            <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
+                                <button class="btn btn-primary w-100">Ajouter une compétence</button>
+                            </div>
                         </div>
                     
                     </div>
-                    <div class="tab-pane fade" id="missions" role="tabpanel" aria-labelledby="missions-tab">...</div>
+                    <div class="tab-pane fade" id="missions" role="tabpanel" aria-labelledby="missions-tab">
+
+                        
+                        {% for experience in experiences %}
+                            <div class="row d-flex align-items-center my-2 py-1 rounded table-row">
+                                <div class="col">
+                                    {{ experience.entreprise.name }}
+                                </div>
+                                <div class="col">
+                                    {{ experience.description }}
+                                </div>
+                                <div class="col">
+                                    {{ experience.startDate|date('d-m-Y') }}
+                                </div>
+                                <div class="col">
+                                    {{ experience.endDate|date('d-m-Y') }}
+                                </div>
+                            </div>
+                            
+                        {% endfor %}
+
+
+                    </div>
                     <div class="tab-pane fade" id="fichiers" role="tabpanel" aria-labelledby="fichiers-tab">...</div>
                 </div>
             </div>

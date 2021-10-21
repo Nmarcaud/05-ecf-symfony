@@ -6,6 +6,7 @@ use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Skill;
 use App\Entity\Status;
+use App\Entity\Category;
 use App\Entity\Entreprise;
 use App\Entity\Experience;
 use Doctrine\Persistence\ObjectManager;
@@ -190,30 +191,67 @@ class AppFixtures extends Fixture
         }
 
 
+        // Compétences & Catégories
+        $category = new Category;
+        $category->setName('Front')->setCreatedAt($faker->dateTime());
+        $manager->persist($category);
 
-        // Compétences
-        $skill = new Skill;
-        $skill->setName('Php')->setCreatedAt($faker->dateTime());
-        $manager->persist($skill);
-        $skill = new Skill;
-        $skill->setName('Ruby')->setCreatedAt($faker->dateTime());
-        $manager->persist($skill);
-        $skill = new Skill;
-        $skill->setName('Javascript')->setCreatedAt($faker->dateTime());
-        $manager->persist($skill);
-        $skill = new Skill;
-        $skill->setName('HTML')->setCreatedAt($faker->dateTime());
-        $manager->persist($skill);
-        $skill = new Skill;
-        $skill->setName('CSS')->setCreatedAt($faker->dateTime());
-        $manager->persist($skill);
-        $skill = new Skill;
-        $skill->setName('Bootstrap')->setCreatedAt($faker->dateTime());
-        $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Javascript')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('HTML')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('CSS')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Bootstrap')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+        
+        // Compétences & Catégories
+        $category = new Category;
+        $category->setName('Back')->setCreatedAt($faker->dateTime());
+        $manager->persist($category);
 
+            $skill = new Skill;
+            $skill->setName('Php')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Ruby')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Python')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('NodeJS')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            
+        // Compétences & Catégories
+        $category = new Category;
+        $category->setName('CMS')->setCreatedAt($faker->dateTime());
+        $manager->persist($category);
 
+            $skill = new Skill;
+            $skill->setName('Wordpress')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Cardstack')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Prestashop')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Shopify')->setCreatedAt($faker->dateTime())->setCategory($category);
+            $manager->persist($skill);
 
         $manager->flush();
+
+
+
+        // Ajout User_Skill
+        
+
     }
 
 }
