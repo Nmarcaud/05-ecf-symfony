@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Form\UserInfoType;
+use App\Repository\UserRepository;
+use App\Repository\SkillRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ExperienceRepository;
-use App\Repository\SkillRepository;
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProfilController extends AbstractController
 {
@@ -17,20 +20,22 @@ class ProfilController extends AbstractController
     protected $categoryRepository;
     protected $experienceRepository;
     protected $skillRepository;
+    protected $em;
 
-    public function __construct(UserRepository $userRepository, CategoryRepository $categoryRepository, ExperienceRepository $experienceRepository, SkillRepository $skillRepository)
+    public function __construct(UserRepository $userRepository, CategoryRepository $categoryRepository, ExperienceRepository $experienceRepository, SkillRepository $skillRepository, EntityManagerInterface $em)
     {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
         $this->experienceRepository = $experienceRepository;
         $this->skillRepository = $skillRepository;
+        $this->em = $em;
     }
 
     
     /**
      * @Route("{id}/profil", name="profil")
      */
-    public function index($id): Response
+    public function index($id, Request $request): Response
     {
 
         // Candidat ou Collaborateur
@@ -76,10 +81,26 @@ class ProfilController extends AbstractController
         $experiences = $this->experienceRepository->findBy(['user' => $id]);
 
 
+
+        $user = $this->userRepository->find($id);
+
+        $form = $this->createForm(UserInfoType::class, $user);          // 1 Création du formulaire,AVEC l'élément à modifier
+        $formProfilInfoView = $form->createView();                      // 2 Création de la vue
+
+        $form->handleRequest($request);                                 // 3 Inspecte la request ( si form soumis )
+        if ($form->isSubmitted()) {                                     // 4 Si, est soumis
+
+            $user->setModifiedAt(new \DateTime());                      // 5 Datetime de modification
+            $this->em->flush();                                         // 6 Pas besoin de persist car déjà en base
+            
+            return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('profil/index.html.twig', [
             'profil' => $profil,
             'categories' => $categoriesView,
-            'experiences' => $experiences
+            'experiences' => $experiences,
+            'formProfilInfoView' => $formProfilInfoView
         ]);
     }
 }

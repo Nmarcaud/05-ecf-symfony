@@ -35,6 +35,9 @@
 .card-header {
     border-radius: 1em 1em 0 0 !important;
 }
+.card-footer {
+    border-radius: 0 0 1em 1em !important;
+}
 .card-profil:hover {
     transform: scale(1.05);
 }
