@@ -37,11 +37,11 @@
                 <div class="col">
                     {{ skill.name }}
                 </div>
-                <div class="col text-end">
-                    <a class="btn btn-outline-success px-3" href="{{ path ('skills_edit', {'id': skill.id})}}">
+                <div class="col-auto text-end">
+                    <a class="grass-2 px-3" href="{{ path ('skills_edit', {'id': skill.id})}}">
 						<i class="far fa-pen"></i>
 					</a>
-					<a class="btn btn-outline-danger px-3" href="{{ path ('skills_delete', {'id': skill.id})}}">
+					<a class="grape-2 px-3" href="{{ path ('skills_delete', {'id': skill.id})}}">
 						<i class="far fa-times"></i>
 					</a>
                 </div>

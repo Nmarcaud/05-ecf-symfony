@@ -1,49 +1,77 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Gestion des Collaborateur</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
+<div class="caontainer-fluid">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container">
+			<a class="navbar-brand" href="#">Opérator Skills</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="{{ path('home') }}"><i class="far fa-home fa-fw"></i> Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('profil', {'id': app.user.id }) }}">
+							<i class="far fa-user fa-fw"></i>
+							Mon Profil</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Paramètres
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li>
+								<a class="dropdown-item" href="{{ path('collaborateurs') }}">
+									<i class="far fa-users fa-fw"></i>
+									Collaborateurs</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('candidats') }}">
+									<i class="far fa-handshake fa-fw"></i>
+									Candidats</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('skills')}}">
+									<i class="far fa-user-graduate fa-fw"></i>
+									Compétences</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">
+									<i class="far fa-folder-tree"></i>
+									Catégories</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('entreprises') }}">
+									<i class="far fa-starship fa-fw"></i>
+									Entreprises</a>
+							</li>
+						</ul>
+					</li>
+					
+				</ul>
+
+                <div class="nav-item ms-auto">
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
-                        <button class="btn btn-outline-info" type="submit">Search</button>
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
                     </form>
-                </li>
-            </ul>
-            {% if app.user %}
-                <div class="nav-item ms-auto">
-                    <a class="nav-link " href="{{ path('app_logout') }}">Se Déconnecter</a>
                 </div>
-            {% else %}
-                <div class="nav-item ms-auto">
-                    <a class="nav-link " href="{{ path('app_logout') }}">Inscription</a>
-                </div>
-                <div class="nav-item">
-                    <a class="nav-link " href="{{ path('app_login') }}">Se connecter</a>
-                </div>
-            {% endif %}
-            
-            
-        </div>
-    </div>
-</nav>
+
+				{% if app.user %}
+					<div class="nav-item ms-auto">
+						<a class="nav-link " href="{{ path('app_logout') }}">Se Déconnecter</a>
+					</div>
+				{% else %}
+					<div class="nav-item ms-auto">
+						<a class="nav-link " href="{{ path('app_logout') }}">Inscription</a>
+					</div>
+					<div class="nav-item">
+						<a class="nav-link " href="{{ path('app_login') }}">Se connecter</a>
+					</div>
+				{% endif %}
+
+
+			</div>
+		</div>
+	</nav>
+</div>

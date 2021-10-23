@@ -10,15 +10,15 @@
 
         <!-- En tête tableau -->
         <div class="row my-2 py-1">
-            <div class="col"></div>
-            <div class="col">
-                <strong>Id</strong>
-            </div>
+            <div class="col-1"></div>
             <div class="col">
                 <strong>Prénom</strong>
             </div>
             <div class="col">
                 <strong>Nom</strong>
+            </div>
+			<div class="col">
+                <strong>Email</strong>
             </div>
             <div class="col">
                 <strong>Status</strong>
@@ -30,17 +30,17 @@
 
 			<!-- Row Skill -->
 			<div class="row d-flex align-items-center my-2 py-1 rounded table-row">
-				<div class="col">
+				<div class="col-1">
 					<img src="{{ c.pictureUrl }}" alt="{{ c.firstname }} {{ c.lastname }}" class="table-img">
-				</div>
-				<div class="col">
-					{{ c.id }}
 				</div>
 				<div class="col">
 					{{ c.firstname }}
 				</div>
 				<div class="col">
 					{{ c.lastname }}
+				</div>
+				<div class="col">
+					{{ c.email }}
 				</div>
 				<div class="col">
 					{{ c.status.name }}

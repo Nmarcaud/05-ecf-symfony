@@ -58,6 +58,7 @@ class AppFixtures extends Fixture
             // Ajout d'expériences Random
             $nbExp = rand(1, 8);
             for ($e = 1; $e <= $nbExp; $e++) {
+
                 $experience = new Experience();
 
                 $experience->setEntreprise($listEntreprises[rand(0, count($listEntreprises)-1)])
@@ -84,13 +85,15 @@ class AppFixtures extends Fixture
         // Mot de passe encodé
         $hash = $this->encoder->hashPassword($admin, "password");
 
-        $admin->setFirstname("'Nicolas")
+        $admin->setFirstname("Nicolas")
         ->setLastname('Marcaud')
         ->setEmail("admin@gmail.com")
         ->setPassword($hash)
         ->setRoles(['ROLE_ADMIN'])
         ->setPhone($faker->phoneNumber())
-        ->setAdresse($faker->address())
+        ->setAdresse($faker->streetAddress())
+        ->setZipCode($faker->postcode())
+        ->setCity($faker->city())
         ->setStatus($status)
         ->setPictureUrl($faker->imageUrl(500,500, true))
         ->setCreatedAt($faker->dateTime());
@@ -116,7 +119,9 @@ class AppFixtures extends Fixture
                 ->setLastname($faker->lastName())
                 ->setEmail("collaborateur_$u@gmail.com")
                 ->setPassword($hash)
-                ->setAdresse($faker->address())
+                ->setAdresse($faker->streetAddress())
+                ->setZipCode($faker->postcode())
+                ->setCity($faker->city())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
                 ->setPictureUrl($faker->imageUrl(500,500, true))
@@ -147,7 +152,9 @@ class AppFixtures extends Fixture
                 ->setLastname($faker->lastName())
                 ->setEmail("commercial_$u@gmail.com")
                 ->setPassword($hash)
-                ->setAdresse($faker->address())
+                ->setAdresse($faker->streetAddress())
+                ->setZipCode($faker->postcode())
+                ->setCity($faker->city())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
                 ->setPictureUrl($faker->imageUrl(500,500, true))
@@ -178,7 +185,9 @@ class AppFixtures extends Fixture
                 ->setLastname($faker->lastName())
                 ->setEmail("candidat_$u@gmail.com")
                 ->setPassword($hash)
-                ->setAdresse($faker->address())
+                ->setAdresse($faker->streetAddress())
+                ->setZipCode($faker->postcode())
+                ->setCity($faker->city())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
                 ->setPictureUrl($faker->imageUrl(500,500, true))
@@ -250,7 +259,7 @@ class AppFixtures extends Fixture
 
 
         // Ajout User_Skill
-        
+
 
     }
 
