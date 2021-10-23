@@ -131,10 +131,10 @@
                         <div class="row my-3">
                             <div class="col-12">
                                 <div class="card">
-                                    <div class="card-header">
+                                    <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseSkillForm" role="button" aria-expanded="false" aria-controls="collapseSkillForm">
                                         <h5 class="m-3">Ajouter une compétence</h5>
                                     </div>
-                                    <div class="card-body p-4">
+                                     <div class="card-body p-4 collapse" id="collapseSkillForm">
                                         {{ form_start(formAddSkillView) }}
                                         <div class="row">
                                             <div class="col-12 col-xl">{{ form_row(formAddSkillView.skill) }}</div>
@@ -146,7 +146,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         {% for category in categories %}
                             <div class="row mb-3 g-3">
@@ -197,31 +196,61 @@
                     
                     </div>
                     <div class="tab-pane fade" id="missions" role="tabpanel" aria-labelledby="missions-tab">
-                       
-                        {% for experience in experiences %}
 
-                            <div class="card mb-3">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col">
-                                            <p class="mb-0"><i class="far fa-starship"></i> {{ experience.entreprise.name }}</p>
+
+                        <!-- Ajouter Une Expérience-->
+                        <div class="row my-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseExpForm" role="button" aria-expanded="false" aria-controls="collapseExpForm">
+                                        <h5 class="m-3">Ajouter une expérience</h5>
+                                    </div>
+                                    <div class="card-body p-4 collapse" id="collapseExpForm">
+                                        {{ form_start(formAddExperrienceView) }}
+                                        <div class="row">
+                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.startDate) }}</div>
+                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.endDate) }}</div>
                                         </div>
-                                        <div class="col">
-                                            <p class="mb-0"><i class="far fa-calendar-alt"></i> Du <span class="dg-1">{{ experience.startDate|date('d-m-Y') }}</span> au <span class="dg-1">{{ experience.endDate|date('d-m-Y') }}</span></p>
+                                        <div class="row">
+                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.title) }}</div>
+                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.Entreprise) }}</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <a class="blue-3 mx-1" href="{{ path ('experience_edit', {'id_exp': experience.id})}}"><i class="far fa-edit"></i></a>
-                                            <a class="grape-3 mx-1" href="{{ path ('experience_delete', {'id_exp': experience.id})}}"><i class="far fa-times"></i></a>
+                                        <div class="row">
+                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.description) }}</div>
+                                        </div>
+                                        {{ form_end(formAddExperrienceView) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expériences -->
+                        <div class="row d-flex flex-column-reverse">
+                            {% for experience in experiences %}
+                                <div class="col-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="mb-0"><i class="far fa-starship"></i> {{ experience.entreprise.name }}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="mb-0"><i class="far fa-calendar-alt"></i> Du <span class="dg-1">{{ experience.startDate|date('d-m-Y') }}</span> au <span class="dg-1">{{ experience.endDate|date('d-m-Y') }}</span></p>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a class="blue-3 mx-1" href="{{ path ('experience_edit', {'id_exp': experience.id})}}"><i class="far fa-edit"></i></a>
+                                                    <a class="grape-3 mx-1" href="{{ path ('experience_delete', {'id_exp': experience.id})}}"><i class="far fa-times"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h6><i class="far fa-id-card-alt"></i> {{ experience.title }}</h6>
+                                            <p>{{ experience.description }}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <h6><i class="far fa-id-card-alt"></i> {{ experience.title }}</h6>
-                                    <p>{{ experience.description }}</p>
-                                </div>
-                            </div>
-                        
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
 
                     </div>
                     <div class="tab-pane fade" id="fichiers" role="tabpanel" aria-labelledby="fichiers-tab">...</div>

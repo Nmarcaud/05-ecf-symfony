@@ -121,6 +121,24 @@ class ProfilController extends AbstractController
             return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
         }
 
+        // --------------------------------//
+        // FORMULAIRE D'AJOUT D'EXPERIENCE //
+        // --------------------------------//
+        $experience = new Experience;
+
+        $form = $this->createForm(ExperienceType::class, $experience);
+        $formAddExperrienceView = $form->createView();
+
+        $form->handleRequest($request); 
+        if ($form->isSubmitted()) {
+
+            $experience->setUser($profil);
+            $experience->setCreatedAt(new \DateTime());
+            $this->em->persist($experience);
+            $this->em->flush();
+
+            return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
+        }
 
     
         return $this->render('profil/index.html.twig', [
@@ -128,7 +146,8 @@ class ProfilController extends AbstractController
             'categories' => $categoriesView,
             'experiences' => $experiences,
             'formProfilInfoView' => $formProfilInfoView,
-            'formAddSkillView' => $formAddSkillView
+            'formAddSkillView' => $formAddSkillView,
+            'formAddExperrienceView' => $formAddExperrienceView
         ]);
     }
 }

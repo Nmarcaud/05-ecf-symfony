@@ -102,6 +102,9 @@ class AppFixtures extends Fixture
 
         $manager->persist($admin);
 
+        // Ajout d'expériences Random
+        addXp($faker, $admin, $manager, $listEntreprises);
+
         
 
         // Utilisateurs
