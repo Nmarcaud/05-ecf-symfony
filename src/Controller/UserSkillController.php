@@ -8,10 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
+/**
+ * @Route("/user/skill")
+ */
 class UserSkillController extends AbstractController
 {
     /**
-     * @Route("/user/skill", name="user_skill")
+     * @Route("/", name="user_skill")
      */
     public function index(): Response
     {

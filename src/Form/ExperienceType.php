@@ -18,13 +18,22 @@ class ExperienceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('description', TextareaType::class, ['label' => 'Description du poste'])
-            ->add('startDate', DateType::class, ['label' => 'Date de Début'])
-            ->add('endDate', DateType::class, ['label' => 'Date de Fin'])
-            ->add('title', TextType::class, ['label' => 'Titre du poste occupé'])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description du poste',
+                'attr' => ['rows' => 5],
+                ])
+            ->add('startDate', DateType::class, [
+                'label' => 'Date de Début'
+            ])
+            ->add('endDate', DateType::class, [
+                'label' => 'Date de Fin'
+                ])
+            ->add('title', TextType::class, [
+                'label' => 'Intitulé du poste occupé'
+                ])
             ->add('Entreprise', EntityType::class, [
                 'class' => Entreprise::class,
-                'label' => 'Compétence'
+                'label' => 'Entreprise'
                 ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Modifier'

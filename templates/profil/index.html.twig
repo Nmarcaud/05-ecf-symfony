@@ -18,7 +18,11 @@
                             </div>
                             <div class="col col-lg-12">
                                 <h2 class="fs-4">{{ profil.firstname }} {{ profil.lastname|upper }}</h2>
-                                <h5>{{experiences[0].title}}</h5>
+                                {% if experiences %}
+                                    <h5>{{experiences[0].title}}</h5>
+                                {% else %}
+                                    <h5>Profession Inconnue !</h5>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -191,37 +195,14 @@
                                             <p class="mb-0"><i class="far fa-calendar-alt"></i> Du <span class="dg-1">{{ experience.startDate|date('d-m-Y') }}</span> au <span class="dg-1">{{ experience.endDate|date('d-m-Y') }}</span></p>
                                         </div>
                                         <div class="col-auto">
-                                            <a class="grass-2 mx-1" data-bs-toggle="collapse" href="#collapse{{ experience.id }}" role="button" aria-expanded="false" aria-controls="collapse{{ experience.id }}"><i class="far fa-edit"></i></a>
-                                            <a class="grape-2 mx-1" href="{{ path ('experience_delete', {'id': experience.id})}}"><i class="far fa-times"></i></a>
+                                            <a class="blue-3 mx-1" href="{{ path ('experience_edit', {'id_exp': experience.id})}}"><i class="far fa-edit"></i></a>
+                                            <a class="grape-3 mx-1" href="{{ path ('experience_delete', {'id_exp': experience.id})}}"><i class="far fa-times"></i></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <h6><i class="far fa-id-card-alt"></i> {{ experience.title }}</h6>
                                     <p>{{ experience.description }}</p>
-                                   
-                                    <div class="collapse" id="collapse{{ experience.id }}">
-                                        <div class="card card-body shadow-none">
-                                            <h6>Modifier l'expérience</h6>
-                                            {{ form_start(formViewsExperiencesList[experience.id]) }}
-                                            
-                                            <div class="row">
-                                                <div class="col-12 col-lg">{{ form_row(formViewsExperiencesList[experience.id].startDate) }}</div>
-                                                <div class="col-12 col-lg">{{ form_row(formViewsExperiencesList[experience.id].endDate) }}</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-lg">{{ form_row(formViewsExperiencesList[experience.id].title) }}</div>
-
-                                                <div class="col-12 col-lg">{{ form_row(formViewsExperiencesList[experience.id].Entreprise) }}</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-xl">{{ form_row(formViewsExperiencesList[experience.id].description) }}</div>
-                                            </div>
-                                            <input type="submit" />
-                                            {{ form_end(formViewsExperiencesList[experience.id]) }}
-                                        </div>
-                                        
-                                    </div>
                                 </div>
                             </div>
                         

@@ -122,40 +122,13 @@ class ProfilController extends AbstractController
         }
 
 
-        // -----------------------------------------//
-        // FORMULAIRES DE MODIFICATION D'EXPERIENCE //
-        // -----------------------------------------//
-        /* Formulaire à gnérer pour chaque expérience */
-
-        $formViewsExperiencesList = array();
-        foreach($experiences as $experience) {
-
-            $form = $this->createForm(ExperienceType::class, $experience);
-            $formModifyExperienceView = $form->createView();
-
-            $form->handleRequest($request); 
-            if ($form->isSubmitted()) {
-
-                $experience->setUser($profil);
-                $experience->setCreatedAt(new \DateTime());
-
-                dd($experience);
-                $this->em->flush();
-
-                return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
-            }
-            // Liste des formulaires associés à l'id de l'expérience
-            $formViewsExperiencesList[$experience->getId()] = $formModifyExperienceView;
-        }
-        
-
+    
         return $this->render('profil/index.html.twig', [
             'profil' => $profil,
             'categories' => $categoriesView,
             'experiences' => $experiences,
             'formProfilInfoView' => $formProfilInfoView,
-            'formAddSkillView' => $formAddSkillView,
-            'formViewsExperiencesList' => $formViewsExperiencesList
+            'formAddSkillView' => $formAddSkillView
         ]);
     }
 }

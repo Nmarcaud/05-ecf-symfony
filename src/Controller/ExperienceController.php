@@ -2,12 +2,18 @@
 
 namespace App\Controller;
 
+use App\Form\ExperienceType;
 use App\Repository\ExperienceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
+/**
+ * @Route("/experience")
+ */
 class ExperienceController extends AbstractController
 {
 
@@ -20,7 +26,7 @@ class ExperienceController extends AbstractController
         $this->em = $em;
     }
     /**
-     * @Route("/experience", name="experience")
+     * @Route("/", name="experience")
      */
     public function index(): Response
     {
@@ -31,36 +37,38 @@ class ExperienceController extends AbstractController
 
 
     /**
-     * @Route("/{id}/edit", name="experience_edit")
+     * @Route("/{id_exp}/edit", name="experience_edit")
      */
-    // public function edit($id, UserRepository $userRepository, Request $request, EntityManagerInterface $em): Response
-    // {
-    //     $candidat = $userRepository->find($id);
+    public function edit($id_exp, Request $request): Response
+    {
+        $experience = $this->experienceRepository->find($id_exp);
 
-    //     $form = $this->createForm(CandidatType::class, $candidat);    // 1 Création du formulaire,AVEC l'élément à modifier
-    //     $formView = $form->createView();                        // 2 Création de la vue
+        $form = $this->createForm(ExperienceType::class, $experience);
+        $formView = $form->createView();
 
-    //     $form->handleRequest($request);                         // 3 Inspecte la request ( si form soumis )
-    //     if ($form->isSubmitted()) {                             // 4 Si, est soumis
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
 
-    //         $candidat->setModifiedAt(new \DateTime());             // 5 Datetime de modification
-    //         $em->flush();                                       // 6 Pas besoin de persist car déjà en base
+            // Je chope le user id avent supression pour redirect
+            $userIdToRedirect = $experience->getUser()->getId();
+
+            $experience->setModifiedAt(new \DateTime());
+            $this->em->flush();
             
-    //         return $this->redirectToRoute('candidats', [], Response::HTTP_SEE_OTHER);
-    //     }
+            return $this->redirect($this->generateUrl('profil', array('id' => $userIdToRedirect)));
+        }
 
-    //     return $this->render('experience/edit.html.twig', [
-    //         'formView' => $formView,
-    //         'candidat' => $candidat
-    //     ]);
-    // }
+        return $this->render('experience/edit.html.twig', [
+            'formView' => $formView
+        ]);
+    }
 
     /**
-     * @Route("/{id}/delete", name="experience_delete")
+     * @Route("/{id_exp}/delete", name="experience_delete")
      */
-    public function delete($id): Response
+    public function delete($id_exp): Response
     {
-        $experience = $this->experienceRepository->find($id);
+        $experience = $this->experienceRepository->find($id_exp);
 
         // Je chope le user id avent supression pour redirect
         $userIdToRedirect = $experience->getUser()->getId();

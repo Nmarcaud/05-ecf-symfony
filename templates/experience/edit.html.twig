@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une expérience{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="row d-flex align-items-center my-4">
+            <div class="col">
+                <h1>Modifier une expérience</h1>
+            </div>
+        </div>
+        {{ form_start(formView) }}
+                                            
+        <div class="row">
+            <div class="col-12 col-lg">{{ form_row(formView.startDate) }}</div>
+            <div class="col-12 col-lg">{{ form_row(formView.endDate) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg">{{ form_row(formView.title) }}</div>
+
+            <div class="col-12 col-lg">{{ form_row(formView.Entreprise) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-xl">{{ form_row(formView.description) }}</div>
+        </div>
+        {{ form_end(formView) }}
+        
+    </div>
+
+{% endblock %}
