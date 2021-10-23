@@ -192,12 +192,7 @@
                                         </div>
                                         <div class="col-auto">
                                             <a class="grass-2 mx-1" data-bs-toggle="collapse" href="#collapse{{ experience.id }}" role="button" aria-expanded="false" aria-controls="collapse{{ experience.id }}"><i class="far fa-edit"></i></a>
-                                            <div class="collapse" id="#collapse_{{ experience.id }}">
-                                        <div class="card card-body">
-                                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                                        </div>
-                                    </div>
-                                            <a class="grape-2 mx-1" href="#"><i class="far fa-times"></i></a>
+                                            <a class="grape-2 mx-1" href="{{ path ('experience_delete', {'id': experience.id})}}"><i class="far fa-times"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -222,8 +217,10 @@
                                             <div class="row">
                                                 <div class="col-12 col-xl">{{ form_row(formViewsExperiencesList[experience.id].description) }}</div>
                                             </div>
+                                            <input type="submit" />
                                             {{ form_end(formViewsExperiencesList[experience.id]) }}
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
