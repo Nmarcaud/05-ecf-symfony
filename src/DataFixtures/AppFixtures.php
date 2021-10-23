@@ -89,18 +89,18 @@ class AppFixtures extends Fixture
         ->setLastname('Marcaud')
         ->setEmail("admin@gmail.com")
         ->setPassword($hash)
-        ->setRoles(['ROLE_ADMIN'])
+        ->setRoles(['ROLE_ADMIN', 'ROLE_COLLABORATEUR', 'ROLE_COMMERCIAL', 'ROLE_CANDIDAT'])
         ->setPhone($faker->phoneNumber())
         ->setAdresse($faker->streetAddress())
         ->setZipCode($faker->postcode())
         ->setCity($faker->city())
         ->setStatus($status)
-        ->setPictureUrl($faker->imageUrl(500,500, true))
+        ->setPictureUrl($faker->imageUrl(300,300, true))
         ->setCreatedAt($faker->dateTime());
 
         $manager->persist($admin);
 
-
+        
 
         // Utilisateurs
         // Création Status Collaborateur
@@ -108,7 +108,7 @@ class AppFixtures extends Fixture
         $status->setName("Collaborateur");
         $manager->persist($status);
 
-        for($u = 0; $u < 10; $u++) {
+        for($u = 0; $u < 22; $u++) {
 
             $user = new User();
 
@@ -119,12 +119,13 @@ class AppFixtures extends Fixture
                 ->setLastname($faker->lastName())
                 ->setEmail("collaborateur_$u@gmail.com")
                 ->setPassword($hash)
+                ->setRoles(['ROLE_COLLABORATEUR'])
                 ->setAdresse($faker->streetAddress())
                 ->setZipCode($faker->postcode())
                 ->setCity($faker->city())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
-                ->setPictureUrl($faker->imageUrl(500,500, true))
+                ->setPictureUrl($faker->imageUrl(300,300, true))
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random
@@ -141,7 +142,7 @@ class AppFixtures extends Fixture
         $status->setName("Commercial");
         $manager->persist($status);
 
-        for($u = 0; $u < 10; $u++) {
+        for($u = 0; $u < 15; $u++) {
 
             $user = new User();
 
@@ -152,12 +153,13 @@ class AppFixtures extends Fixture
                 ->setLastname($faker->lastName())
                 ->setEmail("commercial_$u@gmail.com")
                 ->setPassword($hash)
+                ->setRoles(['ROLE_COMMERCIAL'])
                 ->setAdresse($faker->streetAddress())
                 ->setZipCode($faker->postcode())
                 ->setCity($faker->city())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
-                ->setPictureUrl($faker->imageUrl(500,500, true))
+                ->setPictureUrl($faker->imageUrl(300,300, true))
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random
@@ -174,7 +176,7 @@ class AppFixtures extends Fixture
         $status->setName("Candidat");
         $manager->persist($status);
 
-        for($u = 0; $u < 10; $u++) {
+        for($u = 0; $u < 44; $u++) {
 
             $user = new User();
 
@@ -185,12 +187,13 @@ class AppFixtures extends Fixture
                 ->setLastname($faker->lastName())
                 ->setEmail("candidat_$u@gmail.com")
                 ->setPassword($hash)
+                ->setRoles(['ROLE_CANDIDAT'])
                 ->setAdresse($faker->streetAddress())
                 ->setZipCode($faker->postcode())
                 ->setCity($faker->city())
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
-                ->setPictureUrl($faker->imageUrl(500,500, true))
+                ->setPictureUrl($faker->imageUrl(300,300, true))
                 ->setCreatedAt($faker->dateTime());
 
             // Ajout d'expériences Random

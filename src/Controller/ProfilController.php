@@ -6,30 +6,44 @@ use App\Repository\CategoryRepository;
 use App\Repository\ExperienceRepository;
 use App\Repository\SkillRepository;
 use App\Repository\UserRepository;
-use App\Repository\UserSkillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilController extends AbstractController
 {
+
+    protected $userRepository;
+    protected $categoryRepository;
+    protected $experienceRepository;
+    protected $skillRepository;
+
+    public function __construct(UserRepository $userRepository, CategoryRepository $categoryRepository, ExperienceRepository $experienceRepository, SkillRepository $skillRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->experienceRepository = $experienceRepository;
+        $this->skillRepository = $skillRepository;
+    }
+
+    
     /**
      * @Route("{id}/profil", name="profil")
      */
-    public function index($id, UserRepository $userRepository, CategoryRepository $categoryRepository, ExperienceRepository $experienceRepository , SkillRepository $skillRepository): Response
+    public function index($id): Response
     {
 
         // Candidat ou Collaborateur
-        $profil = $userRepository->find($id);
+        $profil = $this->userRepository->find($id);
 
         // -----------------------------------//
         // AFFICHAGE DES CATEGORIES NON VIDES //
         // -----------------------------------//
 
             // Liste globale des catégories 
-            $categories = $categoryRepository->findAll();
+            $categories = $this->categoryRepository->findAll();
             // Liste globale des skills
-            $skills = $skillRepository->findAll();
+            $skills = $this->skillRepository->findAll();
 
             // Liste des ids des compétences du user
             $skillIds = array();
@@ -59,7 +73,7 @@ class ProfilController extends AbstractController
         // --------------------------//
         // AFFICHAGE DES EXPERIENCES //
         // --------------------------//
-        $experiences = $experienceRepository->findBy(['user' => $id]);
+        $experiences = $this->experienceRepository->findBy(['user' => $id]);
 
 
         return $this->render('profil/index.html.twig', [

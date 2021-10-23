@@ -6,11 +6,13 @@ use App\Repository\UserRepository;
 use App\Repository\StatusRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 /**
- * @Route("/admin/collaborateurs")
+ * @Route("/collaborateurs")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")
  */
 class CollaborateursController extends AbstractController
 {
