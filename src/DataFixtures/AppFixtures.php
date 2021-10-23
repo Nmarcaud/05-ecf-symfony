@@ -97,7 +97,8 @@ class AppFixtures extends Fixture
         ->setCity($faker->city())
         ->setStatus($status)
         ->setPictureUrl($faker->imageUrl(300,300, true))
-        ->setCreatedAt($faker->dateTime());
+        ->setCreatedAt($faker->dateTime())
+        ->setApsideBirthday($faker->dateTime());
 
         $manager->persist($admin);
 
@@ -127,7 +128,8 @@ class AppFixtures extends Fixture
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
                 ->setPictureUrl($faker->imageUrl(300,300, true))
-                ->setCreatedAt($faker->dateTime());
+                ->setCreatedAt($faker->dateTime())
+                ->setApsideBirthday($faker->dateTime());
 
             // Ajout d'expériences Random
             addXp($faker, $user, $manager, $listEntreprises);
@@ -161,7 +163,8 @@ class AppFixtures extends Fixture
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
                 ->setPictureUrl($faker->imageUrl(300,300, true))
-                ->setCreatedAt($faker->dateTime());
+                ->setCreatedAt($faker->dateTime())
+                ->setApsideBirthday($faker->dateTime());
 
             // Ajout d'expériences Random
             addXp($faker, $user, $manager, $listEntreprises);
@@ -195,7 +198,8 @@ class AppFixtures extends Fixture
                 ->setPhone($faker->phoneNumber())
                 ->setStatus($status)
                 ->setPictureUrl($faker->imageUrl(300,300, true))
-                ->setCreatedAt($faker->dateTime());
+                ->setCreatedAt($faker->dateTime())
+                ->setApsideBirthday(null);
 
             // Ajout d'expériences Random
             addXp($faker, $user, $manager, $listEntreprises);

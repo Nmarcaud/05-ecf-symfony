@@ -24,6 +24,7 @@ class Experience
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="experiences")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $user;
 

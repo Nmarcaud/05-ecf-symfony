@@ -2,18 +2,28 @@
 
 namespace App\Controller;
 
+use App\Form\UserSkillType;
 use App\Repository\UserSkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 /**
  * @Route("/user/skill")
  */
 class UserSkillController extends AbstractController
 {
+
+    protected $userSkillRepository;
+    protected $em;
+
+    public function __construct(UserSkillRepository $userSkillRepository, EntityManagerInterface $em)
+    {
+        $this->userSkillRepository = $userSkillRepository;
+        $this->em = $em;
+    }
     /**
      * @Route("/", name="user_skill")
      */
@@ -24,21 +34,44 @@ class UserSkillController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{user_skill_id}/edit", name="user_skills_edit")
+     */
+    public function edit($user_skill_id, Request $request): Response
+    {
+        $userSkill = $this->userSkillRepository->find($user_skill_id);
 
+        $form = $this->createForm(UserSkillType::class, $userSkill);
+        $formView = $form->createView();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+
+            // Je chope le user id avent supression pour redirect
+            $userIdToRedirect = $userSkill->getUser()->getId();
+
+            //$userSkill->setModifiedAt(new \DateTime());
+            $this->em->flush();
+            
+            return $this->redirect($this->generateUrl('profil', array('id' => $userIdToRedirect)));
+        }
+
+        return $this->render('user_skill/edit.html.twig', [
+            'formView' => $formView
+        ]);
+    }
     /**
      * @Route("/{user_skill_id}/delete", name="user_skills_delete")
      */
-    public function delete($user_skill_id, UserSkillRepository $userSkillRepository, EntityManagerInterface $em): Response
+    public function delete($user_skill_id): Response
     {
-        $userSkill = $userSkillRepository->findOneBy([
-            'id' =>$user_skill_id
-        ]);
+        $userSkill = $this->userSkillRepository->find($user_skill_id);
         
         // Je chope le user id avent supression pour redirect
         $userIdToRedirect = $userSkill->getUser()->getId();
 
-        $em->remove($userSkill);
-        $em->flush();
+        $this->em->remove($userSkill);
+        $this->em->flush();
         
         return $this->redirect($this->generateUrl('profil', array('id' => $userIdToRedirect)));
     }

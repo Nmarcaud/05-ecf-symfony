@@ -30,7 +30,16 @@
                         <div class="row mt-3">
                             <div class="col-12 ">
                                 <div class="card bg-sunflo-3 text-center">
-                                    <div class="card-body"> <h4 class="m-0"><i class="far fa-user-tie"></i> CANDIDAT</h4></div>
+                                    <div class="card-body"> <h5 class="m-0"><i class="far fa-user-tie"></i> CANDIDAT</h5></div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if profil.status.name == "Collaborateur" %}
+                        <div class="row mt-3">
+                            <div class="col-12 ">
+                                <div class="card bg-blue-3 text-center">
+                                    <div class="card-body"> <h5 class="m-0"><i class="far fa-user-tie"></i> COLLABORATEUR</h5></div>
                                 </div>
                             </div>
                         </div>
@@ -53,10 +62,12 @@
                             </div>
 
                             <!-- Date Anniversaire -->
+                            {% if profil.apsideBirthday %}
                             <div class="col-12">
                                 <p class="mb-0">Anniversaire Apside</p>
                                 <small class="dg-1">{{ profil.apsideBirthday|date('d-m-Y') }}</small>
                             </div>
+                            {% endif %}
 
                             <!-- Adresse -->
                             <div class="col-12">
@@ -115,6 +126,27 @@
                 
                 <div class="tab-content mt-3" id="myTabContent">
                     <div class="tab-pane fade show active" id="skill" role="tabpanel" aria-labelledby="skill-tab">
+                        
+                        <!-- Ajouter des Compétences-->
+                        <div class="row my-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="m-3">Ajouter une compétence</h5>
+                                    </div>
+                                    <div class="card-body p-4">
+                                        {{ form_start(formAddSkillView) }}
+                                        <div class="row">
+                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.skill) }}</div>
+                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.apprecied) }}</div>
+                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.level) }}</div>
+                                        </div>
+                                        {{ form_end(formAddSkillView) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                         {% for category in categories %}
                             <div class="row mb-3 g-3">
@@ -140,7 +172,8 @@
                                                             </h4>
                                                         </div>
                                                         <div class="col-auto text-end">
-                                                            <a class="grape-2" href="{{ path ('user_skills_delete', {'user_skill_id': skill.id})}}"><i class="far fa-times"></i></a>
+                                                            <a class="blue-3 mx-1" href="{{ path ('user_skills_edit', {'user_skill_id': skill.id})}}"><i class="far fa-edit"></i></a>
+                                                            <a class="grape-3" href="{{ path ('user_skills_delete', {'user_skill_id': skill.id})}}"><i class="far fa-times"></i></a>
                                                         </div>
                                                     </div>
 
@@ -160,25 +193,7 @@
 
                         {% endfor %}
 
-      
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="m-3">Ajouter une compétence</h4>
-                                    </div>
-                                    <div class="card-body p-4">
-                                        {{ form_start(formAddSkillView) }}
-                                        <div class="row">
-                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.skill) }}</div>
-                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.apprecied) }}</div>
-                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.level) }}</div>
-                                        </div>
-                                        {{ form_end(formAddSkillView) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     
                     </div>
                     <div class="tab-pane fade" id="missions" role="tabpanel" aria-labelledby="missions-tab">

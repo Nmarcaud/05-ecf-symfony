@@ -17,11 +17,11 @@
             <div class="col">
                 <strong>Nom</strong>
             </div>
+            <div class="col">
+                <strong>Poste</strong>
+            </div>
 			<div class="col">
                 <strong>Email</strong>
-            </div>
-            <div class="col">
-                <strong>Status</strong>
             </div>
             <div class="col"></div>
         </div>
@@ -40,15 +40,14 @@
 					{{ c.lastname }}
 				</div>
 				<div class="col">
-					{{ c.email }}
+					{{ c.experiences[0].title }}
 				</div>
 				<div class="col">
-					{{ c.status.name }}
+					{{ c.email }}
 				</div>
 				<div class="col text-end">
-					<a class="blue-2 mx-1" href="{{ path('profil', {'id': c.id}) }}"><i class="far fa-user-tag"></i></a>
-                    <a class="grass-2 mx-1" href="{# path ('collaborateurs_edit', {'id': c.id})#}"><i class="far fa-user-edit"></i></a>
-                    <a class="grape-2 mx-1" href="{# path ('collaborateurs_delete', {'id': c.id})#}"><i class="far fa-user-times"></i></a>
+					<a class="blue-3 mx-1" href="{{ path('profil', {'id': c.id}) }}"><i class="far fa-user-tag"></i></a>
+                    <a class="grape-3 mx-1" href="{{ path ('collaborateurs_delete', {'id': c.id})}}"><i class="far fa-user-times"></i></a>
 				</div>
 			</div>
 

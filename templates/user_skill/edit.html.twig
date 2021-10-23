@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une compétence{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="row d-flex align-items-center my-4">
+            <div class="col">
+                <h1>Modifier une compétence</h1>
+            </div>
+        </div>
+        {{ form_start(formView) }}
+                                            
+        <div class="row">
+            <div class="col-12 col-lg">{{ form_row(formView.skill) }}</div>
+            <div class="col-12 col-lg">{{ form_row(formView.level) }}</div>
+            <div class="col-12 col-xl">{{ form_row(formView.apprecied) }}</div>
+        </div>
+        {{ form_end(formView) }}
+        
+    </div>
+
+{% endblock %}

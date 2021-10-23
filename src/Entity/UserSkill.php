@@ -19,6 +19,7 @@ class UserSkill
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userSkills")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $user;
 
