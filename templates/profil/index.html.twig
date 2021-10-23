@@ -11,15 +11,14 @@
 
                 <div class="card">
 
-                    <div class="card-header">
+                    <div class="card-header p-4">
                         <div class="row text-lg-center d-flex align-items-center">
                             <div class="col-auto col-lg-12 my-3 text-center">
                                 <img src="{{ profil.pictureUrl }}" alt="{{ profil.firstname }} {{ profil.lastname }}" class="profil-picture">
                             </div>
                             <div class="col col-lg-12">
                                 <h2 class="fs-4">{{ profil.firstname }} {{ profil.lastname|upper }}</h2>
-                                <p class="text-danger mb-0">Emploi</p>
-                                <em class="text-muted">Expérience actuelle ? Pas de date de fin ?</em>
+                                <h5>{{experiences[0].title}}</h5>
                             </div>
                         </div>
 
@@ -35,31 +34,7 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="row mt-3 p-3 g-4">
-
-                            <!-- Adresse -->
-                            <div class="col-12">
-                                <p class="mb-0">Adresse</p>
-                                <small class="dg-1">{{ profil.adresse }}</small>
-                            </div>
-
-                            <!-- Code Postal -->
-                            <div class="col-12 col-md-6 col-lg-12">
-                                <p class="mb-0">Code Postal</p>
-                                <small class="dg-1">{{ profil.zipCode }}</small>
-                            </div>
-
-                            <!-- Ville -->
-                            <div class="col-12 col-md-6 col-lg-12">
-                                <p class="mb-0">Ville</p>
-                                <small class="dg-1">{{ profil.city }}</small>
-                            </div>
-
-                            <!-- Date Anniversaire -->
-                            <div class="col-12">
-                                <p class="mb-0">Anniversaire Apside</p>
-                                <small class="dg-1">{{ profil.apsideBirthday|date('d-m-Y') }}</small>
-                            </div>
+                        <div class="row p-3 g-4">
 
                             <!-- Email -->
                             <div class="col-12 col-md-6 col-lg-12">
@@ -71,6 +46,30 @@
                             <div class="col-12 col-md-6 col-lg-12">
                                 <p class="mb-0">Téléphone</p>
                                 <small class="dg-1">{{ profil.phone }}</small>
+                            </div>
+
+                            <!-- Date Anniversaire -->
+                            <div class="col-12">
+                                <p class="mb-0">Anniversaire Apside</p>
+                                <small class="dg-1">{{ profil.apsideBirthday|date('d-m-Y') }}</small>
+                            </div>
+
+                            <!-- Adresse -->
+                            <div class="col-12">
+                                <p class="mb-0">Adresse</p>
+                                <small class="dg-1">{{ profil.adresse }}</small>
+                            </div>
+
+                            <!-- Code Postal -->
+                            <div class="col-12 col-md-6">
+                                <p class="mb-0">Code Postal</p>
+                                <small class="dg-1">{{ profil.zipCode }}</small>
+                            </div>
+
+                            <!-- Ville -->
+                            <div class="col-12 col-md-6">
+                                <p class="mb-0">Ville</p>
+                                <small class="dg-1">{{ profil.city }}</small>
                             </div>
 
                             <!-- Compétences Principales -->
@@ -165,7 +164,7 @@
                                         <h4 class="m-3">Ajouter une compétence</h4>
                                     </div>
                                     <div class="card-body p-4">
-                                     {{ form_start(formAddSkillView) }}
+                                        {{ form_start(formAddSkillView) }}
                                         <div class="row">
                                             <div class="col-12 col-xl">{{ form_row(formAddSkillView.skill) }}</div>
                                             <div class="col-12 col-xl">{{ form_row(formAddSkillView.apprecied) }}</div>
@@ -179,29 +178,56 @@
                     
                     </div>
                     <div class="tab-pane fade" id="missions" role="tabpanel" aria-labelledby="missions-tab">
-
-                        
+                       
                         {% for experience in experiences %}
-                            <div class="row d-flex align-items-center my-2 py-1 rounded table-row">
-                                <div class="col">
-                                    {{ experience.entreprise.name }}
+
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="mb-0"><i class="far fa-starship"></i> {{ experience.entreprise.name }}</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="mb-0"><i class="far fa-calendar-alt"></i> Du <span class="dg-1">{{ experience.startDate|date('d-m-Y') }}</span> au <span class="dg-1">{{ experience.endDate|date('d-m-Y') }}</span></p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a class="grass-2 mx-1" data-bs-toggle="collapse" href="#collapse{{ experience.id }}" role="button" aria-expanded="false" aria-controls="collapse{{ experience.id }}"><i class="far fa-edit"></i></a>
+                                            <div class="collapse" id="#collapse_{{ experience.id }}">
+                                        <div class="card card-body">
+                                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                                        </div>
+                                    </div>
+                                            <a class="grape-2 mx-1" href="#"><i class="far fa-times"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    {{ experience.description }}
-                                </div>
-                                <div class="col">
-                                    {{ experience.startDate|date('d-m-Y') }}
-                                </div>
-                                <div class="col">
-                                    {{ experience.endDate|date('d-m-Y') }}
-                                </div>
-                                <div class="col-auto">
-                                    <a class="blue-2 mx-1" href="#"><i class="far fa-tag"></i></a>
-                                    <a class="grass-2 mx-1" href="#"><i class="far fa-edit"></i></a>
-                                    <a class="grape-2 mx-1" href="#"><i class="far fa-times"></i></a>
+                                <div class="card-body">
+                                    <h6><i class="far fa-id-card-alt"></i> {{ experience.title }}</h6>
+                                    <p>{{ experience.description }}</p>
+                                   
+                                    <div class="collapse" id="collapse{{ experience.id }}">
+                                        <div class="card card-body shadow-none">
+                                            <h6>Modifier l'expérience</h6>
+                                            {{ form_start(formViewsExperiencesList[experience.id]) }}
+                                            
+                                            <div class="row">
+                                                <div class="col-12 col-lg">{{ form_row(formViewsExperiencesList[experience.id].startDate) }}</div>
+                                                <div class="col-12 col-lg">{{ form_row(formViewsExperiencesList[experience.id].endDate) }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-lg">{{ form_row(formViewsExperiencesList[experience.id].title) }}</div>
+
+                                                <div class="col-12 col-lg">{{ form_row(formViewsExperiencesList[experience.id].Entreprise) }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-xl">{{ form_row(formViewsExperiencesList[experience.id].description) }}</div>
+                                            </div>
+                                            {{ form_end(formViewsExperiencesList[experience.id]) }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
+                        
                         {% endfor %}
 
                     </div>

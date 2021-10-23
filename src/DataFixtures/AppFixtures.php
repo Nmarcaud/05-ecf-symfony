@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
         for ($e = 0; $e < 15; $e++) {
             
             $entreprise = new Entreprise;
-            $entreprise->setName($faker->university())
+            $entreprise->setName($faker->company())
                 ->setCreatedAt($faker->dateTime());
             
             // Ajout à la liste pour réutilisation dans " experience "
@@ -62,7 +62,8 @@ class AppFixtures extends Fixture
                 $experience = new Experience();
 
                 $experience->setEntreprise($listEntreprises[rand(0, count($listEntreprises)-1)])
-                    ->setDescription($faker->course())
+                    ->setTitle($faker->jobTitle())
+                    ->setDescription($faker->paragraph($nbSentences = 3, $variableNbSentences = true))
                     ->setUser($user)
                     ->setStartDate($faker->dateTime())
                     ->setEndDate($faker->dateTime())

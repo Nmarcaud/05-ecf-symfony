@@ -17,8 +17,6 @@ class UserSkillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
-        dump($options);
-
         $builder
             ->add('skill', EntityType::class, [
                 'class' => Skill::class,
@@ -38,7 +36,8 @@ class UserSkillType extends AbstractType
                     'max' => 5
                 ],
                 'help' => 'Entre 1 et 5',
-            ])->add('submit', SubmitType::class, [
+            ])
+            ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter'
             ]);
             

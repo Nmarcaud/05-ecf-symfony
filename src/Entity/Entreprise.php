@@ -43,6 +43,10 @@ class Entreprise
     {
         $this->experiences = new ArrayCollection();
     }
+    public function __toString()
+    {
+        return (string) $this->getName();
+    }
 
     public function getId(): ?int
     {
