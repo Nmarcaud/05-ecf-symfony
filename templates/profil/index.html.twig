@@ -10,8 +10,8 @@
             <div class="col-12 col-lg-4 my-3">
 
                 <div class="card">
-                    <div class="card-body">
 
+                    <div class="card-header">
                         <div class="row text-lg-center d-flex align-items-center">
                             <div class="col-auto col-lg-12 my-3 text-center">
                                 <img src="{{ profil.pictureUrl }}" alt="{{ profil.firstname }} {{ profil.lastname }}" class="profil-picture">
@@ -23,46 +23,58 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        {% if profil.status.name == "Candidat" %}
+                        <div class="row mt-3">
+                            <div class="col-12 ">
+                                <div class="card bg-sunflo-3 text-center">
+                                    <div class="card-body"> <h4 class="m-0"><i class="far fa-user-tie"></i> CANDIDAT</h4></div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row mt-3 p-3 g-4">
 
                             <!-- Adresse -->
-                            <div class="col-12 my-3">
+                            <div class="col-12">
                                 <p class="mb-0">Adresse</p>
                                 <small class="dg-1">{{ profil.adresse }}</small>
                             </div>
 
                             <!-- Code Postal -->
-                            <div class="col-12 col-md-6 col-lg-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12">
                                 <p class="mb-0">Code Postal</p>
                                 <small class="dg-1">{{ profil.zipCode }}</small>
                             </div>
 
                             <!-- Ville -->
-                            <div class="col-12 col-md-6 col-lg-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12">
                                 <p class="mb-0">Ville</p>
                                 <small class="dg-1">{{ profil.city }}</small>
                             </div>
 
                             <!-- Date Anniversaire -->
-                            <div class="col-12 my-3">
+                            <div class="col-12">
                                 <p class="mb-0">Anniversaire Apside</p>
                                 <small class="dg-1">{{ profil.apsideBirthday|date('d-m-Y') }}</small>
                             </div>
 
                             <!-- Email -->
-                            <div class="col-12 col-md-6 col-lg-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12">
                                 <p class="mb-0">Email</p>
                                 <small class="dg-1">{{ profil.email }}</small>
                             </div>
 
                             <!-- Téléphone -->
-                            <div class="col-12 col-md-6 col-lg-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12">
                                 <p class="mb-0">Téléphone</p>
                                 <small class="dg-1">{{ profil.phone }}</small>
                             </div>
 
                             <!-- Compétences Principales -->
-                            <div class="col-12 my-3">
+                            <div class="col-12">
                                 <p class="mb-1">Compétences Principales</p>
 
                                 {% for skill in profil.userSkills %}
@@ -73,7 +85,7 @@
                                 
                             </div>
 
-                            <div class="col-12 col-md-6 col-lg-12 my-3">
+                            <div class="col-12 col-md-6 col-lg-12">
                                 <button class="btn btn-primary">Modifier</button>
                             </div>
 
@@ -101,7 +113,7 @@
                             <div class="row mb-3 g-3">
 
                                 <div class="col-12">
-                                    <h4>{{ category.name }}</h4>
+                                    <h4 class="mt-2 mb-0">{{ category.name }}</h4>
                                 </div>
 
                                 {% for skill in profil.userSkills %}
