@@ -292,7 +292,8 @@
                                                 <a class="blue-3 ms-auto" href="{{ asset('uploads/documents/' ~ document.file) }}">
                                                     <i class="far fa-eye"></i> voir le document
                                                 </a>
-                                                
+                                                <a class="grape-3" href="{{ path ('document_delete', {'document_id': document.id})}}"><i class="far fa-times"></i></a>
+
                                             </p>
                                         </div>
                                     </div>
