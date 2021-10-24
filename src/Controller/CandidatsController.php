@@ -38,38 +38,6 @@ class CandidatsController extends AbstractController
 
 
     /**
-     * @Route("/create", name="candidats_create")
-     */
-    public function create(Request $request, EntityManagerInterface $em, StatusRepository $statusRepository): Response
-    {
-        $candidat = new User;
-        $form = $this->createForm(CandidatType::class, $candidat);
-        $formView = $form->createView();
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-
-            // Récupération de la bonne entité candidat
-            $status = $statusRepository->findBy(["name" => "Candidat"]);
-
-            $candidat
-                ->setCreatedAt(new \DateTime())
-                ->setStatus($status[0]);        // Premier ( et seul ) résultat retourné
-                //->setRoles();                 // null dans le cas de candidat
-
-            $em->persist($candidat);
-            $em->flush();
-            
-            return $this->redirectToRoute('candidats', [], Response::HTTP_SEE_OTHER);
-        }
- 
-        return $this->render('candidats/create.html.twig', [
-            'formView' => $formView
-        ]);
-    }
-
-
-    /**
      * @Route("/{id}/edit", name="candidats_edit")
      */
     public function edit($id, UserRepository $userRepository, Request $request, EntityManagerInterface $em): Response

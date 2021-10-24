@@ -3,11 +3,16 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Status;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class AddProfileType extends AbstractType
 {
@@ -17,21 +22,24 @@ class AddProfileType extends AbstractType
             ->add('pictureUrl')
 
             ->add('firstname', TextType::class, ['label' => 'Prénom'])
-            ->add('lastname')
+            ->add('lastname', TextType::class, ['label' => 'Nom'])
 
-            ->add('status')
-            ->add('jobTitle')
+            ->add('status', EntityType::class, [
+                'class' => Status::class,
+                'label' => 'Status'
+                ])
+            ->add('jobTitle', TextType::class, ['label' => 'Intitulé du poste'])
 
-            ->add('email')
-            ->add('password')
+            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('password', PasswordType::class, ['label' => 'Mot de passe'])
 
-            ->add('phone')
+            ->add('phone', TextType::class, ['label' => 'Téléphone'])
             
-            ->add('adresse')
-            ->add('zipCode')
-            ->add('city')
+            ->add('adresse', TextType::class, ['label' => 'Adresse'])
+            ->add('zipCode', TextType::class, ['label' => 'Code Postal'])
+            ->add('city', TextType::class, ['label' => 'Ville'])
             
-            ->add('apsideBirthday')
+            ->add('apsideBirthday', DateType::class, ['label' => 'Date d\'entrée chez Apside'])
             
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter le Profil'

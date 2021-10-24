@@ -43,19 +43,21 @@ class AddProfileController extends AbstractController
             $profil->setCreatedAt(new \DateTime());
 
             // Définitions des rôles en fonction du Status
-            if ($profil->getStatus() === "Commercial") {
+            if ($profil->getStatus()->getName() === "Commercial") {
                 $profil->setRoles(['ROLE_COMMERCIAL']);
-            } elseif ($profil->getStatus() === "Collaborateur") {
+            } elseif ($profil->getStatus()->getName() === "Collaborateur") {
                 $profil->setRoles(['ROLE_COLLABORATEUR']);
-            } elseif ($profil->getStatus() === "Admin") {
+            } elseif ($profil->getStatus()->getName() === "Admin") {
                 $profil->setRoles(['ROLE_ADMIN']);
-            } elseif ($profil->getStatus() === "Candidat") {
+            } elseif ($profil->getStatus()->getName() === "Candidat") {
                 $profil->setRoles(['ROLE_CANDIDAT']);
             } else {
                 $profil->setRoles(['ROLE_USER']);
             }
             $this->em->persist($profil);
             $this->em->flush();
+
+            return $this->redirect($this->generateUrl('profil', array('id' => $profil->getId())));
         }
 
         return $this->render('add_profile/index.html.twig', [
