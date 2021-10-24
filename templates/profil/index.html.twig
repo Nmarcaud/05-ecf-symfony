@@ -253,7 +253,49 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane fade" id="fichiers" role="tabpanel" aria-labelledby="fichiers-tab">...</div>
+                    <div class="tab-pane fade" id="fichiers" role="tabpanel" aria-labelledby="fichiers-tab">
+                        
+                        <!-- Ajouter un Document -->
+                        <div class="row my-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseExpForm" role="button" aria-expanded="false" aria-controls="collapseExpForm">
+                                        <h5 class="m-3">Ajouter un Document</h5>
+                                    </div>
+                                    <div class="card-body p-4 collapse" id="collapseExpForm">
+                                        {{ form_start(formAddDocumentView) }}
+                                            {{ form_row(formAddDocumentView.name) }}
+                                        {{ form_end(formAddDocumentView) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                         <!-- Documents -->
+                        <div class="row d-flex flex-column-reverse">
+                            {% for document in profil.documents %}
+                                <div class="col-12">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <p class="mb-0 d-flex align-items-center">
+                                                <i class="far fa-file-search fa-fw"></i> {{ document.name }} 
+                                                <span class="text-muted ms-1"> - Ajouté le {{ document.createdAt|date('d/m/Y') }}</span> 
+                                                <a class="blue-3 ms-auto" href="{{ asset('uploads/documents/' ~ document.name) }}">
+                                                    <i class="far fa-eye"></i> voir le document
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        
+
+
+
+
+                    </div>
                     <div class="tab-pane fade" id="parameter" role="tabpanel" aria-labelledby="parameter-tab">
                     
                         <div class="card">

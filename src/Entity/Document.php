@@ -23,11 +23,6 @@ class Document
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $url;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="documents")
      */
     private $user;
@@ -50,18 +45,6 @@ class Document
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setUrl(string $url): self
-    {
-        $this->url = $url;
 
         return $this;
     }

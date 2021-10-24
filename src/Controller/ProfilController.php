@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Document;
 use App\Entity\UserSkill;
 use App\Entity\Experience;
 use App\Form\UserInfoType;
 use App\Form\UserSkillType;
 use App\Form\ExperienceType;
+use App\Form\AddDocumentType;
 use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\CategoryRepository;
@@ -15,7 +17,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class ProfilController extends AbstractController
 {
@@ -25,14 +30,16 @@ class ProfilController extends AbstractController
     protected $experienceRepository;
     protected $skillRepository;
     protected $em;
+    protected $slugger;
 
-    public function __construct(UserRepository $userRepository, CategoryRepository $categoryRepository, ExperienceRepository $experienceRepository, SkillRepository $skillRepository, EntityManagerInterface $em)
+    public function __construct(UserRepository $userRepository, CategoryRepository $categoryRepository, ExperienceRepository $experienceRepository, SkillRepository $skillRepository, EntityManagerInterface $em, SluggerInterface $slugger)
     {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
         $this->experienceRepository = $experienceRepository;
         $this->skillRepository = $skillRepository;
         $this->em = $em;
+        $this->slugger = $slugger;
     }
 
     
@@ -140,6 +147,50 @@ class ProfilController extends AbstractController
             return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
         }
 
+
+        // ---------------------------------//
+        // FORMULAIRE D'AJOUT D'UN DOCUMENT //
+        // ---------------------------------//
+        $document = new Document;
+
+        $form = $this->createForm(AddDocumentType::class, $document);
+        $formAddDocumentView = $form->createView();
+
+        $form->handleRequest($request); 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            /** @var UploadedFile $documentFile */
+
+            //dd($form->get('add_document')->getData());
+            $documentFile = $form->get('name')->getData();
+
+            $originalFilename = pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+            // this is needed to safely include the file name as part of the URL
+            $safeFilename = $this->slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$documentFile->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            try {
+                $documentFile->move(
+                    $this->getParameter('document_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+                dd($e);
+            }        
+
+            $document->setName($newFilename);
+            $document->setUser($profil);
+            $document->setCreatedAt(new \DateTime());
+            $this->em->persist($document);
+            $this->em->flush();
+
+            return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
+        }
+
     
         return $this->render('profil/index.html.twig', [
             'profil' => $profil,
@@ -147,7 +198,8 @@ class ProfilController extends AbstractController
             'experiences' => $experiences,
             'formProfilInfoView' => $formProfilInfoView,
             'formAddSkillView' => $formAddSkillView,
-            'formAddExperrienceView' => $formAddExperrienceView
+            'formAddExperrienceView' => $formAddExperrienceView,
+            'formAddDocumentView' => $formAddDocumentView
         ]);
     }
 }
