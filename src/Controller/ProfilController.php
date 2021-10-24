@@ -159,19 +159,21 @@ class ProfilController extends AbstractController
         $form->handleRequest($request); 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
             /** @var UploadedFile $documentFile */
+            $documentFile = $form->get('file')->getData();
 
-            //dd($form->get('add_document')->getData());
-            $documentFile = $form->get('name')->getData();
-
-            $originalFilename = pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME);
-
+            // Renommage
+            if ($form->get('name')->getData() != null) {
+                $originalFilename = $form->get('name')->getData();
+            } else {
+                $originalFilename = pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME);
+            }
+           
             // this is needed to safely include the file name as part of the URL
             $safeFilename = $this->slugger->slug($originalFilename);
             $newFilename = $safeFilename.'-'.uniqid().'.'.$documentFile->guessExtension();
 
-            // Move the file to the directory where brochures are stored
+            // Move the file to the directory where documents are stored
             try {
                 $documentFile->move(
                     $this->getParameter('document_directory'),
@@ -181,8 +183,8 @@ class ProfilController extends AbstractController
                 // ... handle exception if something happens during file upload
                 dd($e);
             }        
+            $document->setFile($newFilename);
 
-            $document->setName($newFilename);
             $document->setUser($profil);
             $document->setCreatedAt(new \DateTime());
             $this->em->persist($document);

@@ -256,6 +256,7 @@
                     <div class="tab-pane fade" id="fichiers" role="tabpanel" aria-labelledby="fichiers-tab">
                         
                         <!-- Ajouter un Document -->
+                        <!-- Sources : https://symfony.com/doc/current/controller/upload_file.html -->
                         <div class="row my-3">
                             <div class="col-12">
                                 <div class="card">
@@ -264,6 +265,7 @@
                                     </div>
                                     <div class="card-body p-4 collapse" id="collapseExpForm">
                                         {{ form_start(formAddDocumentView) }}
+                                            {{ form_row(formAddDocumentView.file) }}
                                             {{ form_row(formAddDocumentView.name) }}
                                         {{ form_end(formAddDocumentView) }}
                                     </div>
@@ -278,24 +280,27 @@
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <p class="mb-0 d-flex align-items-center">
-                                                <i class="far fa-file-search fa-fw"></i> {{ document.name }} 
+
+                                                <!-- Fichié renomé ou non -->
+                                                {% if document.name %}
+                                                <i class="far fa-file fa-fw me-1"></i> {{ document.name }} 
+                                                {% else %}
+                                                <i class="far fa-file fa-fw me-1"></i> {{ document.file }} 
+                                                {% endif %}
+
                                                 <span class="text-muted ms-1"> - Ajouté le {{ document.createdAt|date('d/m/Y') }}</span> 
-                                                <a class="blue-3 ms-auto" href="{{ asset('uploads/documents/' ~ document.name) }}">
+                                                <a class="blue-3 ms-auto" href="{{ asset('uploads/documents/' ~ document.file) }}">
                                                     <i class="far fa-eye"></i> voir le document
                                                 </a>
+                                                
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             {% endfor %}
                         </div>
-
-                        
-
-
-
-
                     </div>
+
                     <div class="tab-pane fade" id="parameter" role="tabpanel" aria-labelledby="parameter-tab">
                     
                         <div class="card">

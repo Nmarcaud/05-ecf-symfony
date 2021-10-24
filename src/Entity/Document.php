@@ -18,7 +18,7 @@ class Document
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -31,6 +31,12 @@ class Document
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $file;
+
 
     public function getId(): ?int
     {
@@ -69,6 +75,18 @@ class Document
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }
