@@ -3,12 +3,13 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Status;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserInfoType extends AbstractType
@@ -23,6 +24,11 @@ class UserInfoType extends AbstractType
             ->add('zip_code', TextType::class, ['label' => 'Code Postal'])
             ->add('city', TextType::class, ['label' => 'Ville'])
             ->add('phone', TextType::class, ['label' => 'Téléphone'])
+            ->add('jobTitle', TextType::class, ['label' => 'Intitulé du poste'])
+            ->add('status', EntityType::class, [
+                'class' => Status::class,
+                'label' => 'Téléphone'
+                ])
             // ->add('pictureUrl')
             ->add('submit', SubmitType::class, [
                 'label' => 'Modifier'
