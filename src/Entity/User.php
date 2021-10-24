@@ -103,6 +103,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $apsideBirthday;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $jobTitle;
+
     public function __construct()
     {
         $this->experiences = new ArrayCollection();
@@ -388,6 +393,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setApsideBirthday(?\DateTimeInterface $apsideBirthday): self
     {
         $this->apsideBirthday = $apsideBirthday;
+
+        return $this;
+    }
+
+    public function getJobTitle(): ?string
+    {
+        return $this->jobTitle;
+    }
+
+    public function setJobTitle(?string $jobTitle): self
+    {
+        $this->jobTitle = $jobTitle;
 
         return $this;
     }

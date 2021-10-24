@@ -18,8 +18,8 @@
                             </div>
                             <div class="col col-lg-12">
                                 <h2 class="fs-4">{{ profil.firstname }} {{ profil.lastname|upper }}</h2>
-                                {% if experiences %}
-                                    <h5>{{experiences[0].title}}</h5>
+                                {% if profil.jobTitle %}
+                                    <h5>{{ profil.jobTitle }}</h5>
                                 {% else %}
                                     <h5>Profession Inconnue !</h5>
                                 {% endif %}

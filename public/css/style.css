@@ -41,7 +41,8 @@
     border: 0;
 }
 .card-header-action:hover {
-    background-color: #73B1F4;
+    background-color: #4b89da;
+    color: White;
     cursor: pointer;
     transform: scale(1.01);
     box-shadow: 2px 2px 15px rgba(0,0,0,.07); 
