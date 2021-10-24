@@ -50,7 +50,10 @@ class UserSkillController extends AbstractController
             // Je chope le user id avent supression pour redirect
             $userIdToRedirect = $userSkill->getUser()->getId();
 
-            //$userSkill->setModifiedAt(new \DateTime());
+            // Update du User
+            $profil = $this->userRepository->find($userIdToRedirect);
+            $profil->setModifiedAt(new \DateTime());
+
             $this->em->flush();
             
             return $this->redirect($this->generateUrl('profil', array('id' => $userIdToRedirect)));
@@ -69,6 +72,10 @@ class UserSkillController extends AbstractController
         
         // Je chope le user id avent supression pour redirect
         $userIdToRedirect = $userSkill->getUser()->getId();
+
+        // Update du User
+        $profil = $this->userRepository->find($userIdToRedirect);
+        $profil->setModifiedAt(new \DateTime());
 
         $this->em->remove($userSkill);
         $this->em->flush();

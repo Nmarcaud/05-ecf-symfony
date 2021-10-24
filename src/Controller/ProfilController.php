@@ -122,6 +122,10 @@ class ProfilController extends AbstractController
 
             $userSkill->setUser($profil);
             $userSkill->setCreatedAt(new \DateTime());
+
+            // Update du User
+            $profil->setModifiedAt(new \DateTime());
+
             $this->em->persist($userSkill);
             $this->em->flush();
 
@@ -141,6 +145,10 @@ class ProfilController extends AbstractController
 
             $experience->setUser($profil);
             $experience->setCreatedAt(new \DateTime());
+
+            // Update du User
+            $profil->setModifiedAt(new \DateTime());
+
             $this->em->persist($experience);
             $this->em->flush();
 
@@ -187,6 +195,10 @@ class ProfilController extends AbstractController
 
             $document->setUser($profil);
             $document->setCreatedAt(new \DateTime());
+
+            // Update du User
+            $profil->setModifiedAt(new \DateTime());
+            
             $this->em->persist($document);
             $this->em->flush();
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\DocumentRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +28,7 @@ class DocumentController extends AbstractController
     /**
      * @Route("/{document_id}/delete", name="document_delete")
      */
-    public function delete($document_id, DocumentRepository $documentRepository, EntityManagerInterface $em): Response
+    public function delete($document_id, DocumentRepository $documentRepository, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
         $document = $documentRepository->find($document_id);
 
@@ -41,6 +42,10 @@ class DocumentController extends AbstractController
         if(file_exists($fileLink)) {
             unlink($fileLink);          // Suppression du fichier
         }
+
+        // Update du User
+        $profil = $userRepository->find($userIdToRedirect);
+        $profil->setModifiedAt(new \DateTime());
 
         // Delete en base
         $em->remove($document);

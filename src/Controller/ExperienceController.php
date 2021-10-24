@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\ExperienceType;
 use App\Repository\ExperienceRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +20,13 @@ class ExperienceController extends AbstractController
 
     protected $experienceRepository;
     protected $em;
+    protected $userRepository;
 
-    public function __construct(ExperienceRepository $experienceRepository, EntityManagerInterface $em)
+    public function __construct(ExperienceRepository $experienceRepository, EntityManagerInterface $em, UserRepository $userRepository)
     {
         $this->experienceRepository = $experienceRepository;
         $this->em = $em;
+        $this->userRepository = $userRepository;
     }
     /**
      * @Route("/", name="experience")
@@ -52,6 +55,10 @@ class ExperienceController extends AbstractController
             // Je chope le user id avent supression pour redirect
             $userIdToRedirect = $experience->getUser()->getId();
 
+            // Update du User
+            $profil = $this->userRepository->find($userIdToRedirect);
+            $profil->setModifiedAt(new \DateTime());
+
             $experience->setModifiedAt(new \DateTime());
             $this->em->flush();
             
@@ -72,6 +79,10 @@ class ExperienceController extends AbstractController
 
         // Je chope le user id avent supression pour redirect
         $userIdToRedirect = $experience->getUser()->getId();
+
+        // Update du User
+        $profil = $this->userRepository->find($userIdToRedirect);
+        $profil->setModifiedAt(new \DateTime());
 
         $this->em->remove($experience);
         $this->em->flush();

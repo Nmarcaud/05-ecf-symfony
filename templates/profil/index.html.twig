@@ -290,9 +290,9 @@
 
                                                 <span class="text-muted ms-1"> - Ajouté le {{ document.createdAt|date('d/m/Y') }}</span> 
                                                 <a class="blue-3 ms-auto" href="{{ asset('uploads/documents/' ~ document.file) }}">
-                                                    <i class="far fa-eye"></i> voir le document
+                                                    <i class="far fa-eye"></i> coup d'oeil
                                                 </a>
-                                                <a class="grape-3" href="{{ path ('document_delete', {'document_id': document.id})}}"><i class="far fa-times"></i></a>
+                                                <a class="grape-3 ms-1" href="{{ path ('document_delete', {'document_id': document.id})}}"><i class="far fa-times fa-fw"></i></a>
 
                                             </p>
                                         </div>
