@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/add/profile")
- * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")
+ * @Security("is_granted('ROLE_ADMIN')")
  */
 class AddProfileController extends AbstractController
 {

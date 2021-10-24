@@ -47,7 +47,9 @@
 				</div>
 				<div class="col text-end">
 					<a class="blue-3 mx-1" href="{{ path('profil', {'id': c.id}) }}"><i class="far fa-user-tag"></i></a>
+					{% if is_granted('ROLE_ADMIN') %}
                     <a class="grape-3 mx-1" href="{{ path ('collaborateurs_delete', {'id': c.id})}}"><i class="far fa-user-times"></i></a>
+					{% endif %}
 				</div>
 			</div>
 

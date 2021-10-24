@@ -214,6 +214,11 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        // Autres Type de Users - On sait jamais !
+        $status = new Status;
+        $status->setName("Autre");
+        $manager->persist($status);
+
 
         // Compétences & Catégories
         $category = new Category;

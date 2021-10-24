@@ -12,18 +12,22 @@
 						<a class="nav-link" aria-current="page" href="{{ path('home') }}"><i class="far fa-home fa-fw"></i> Dashboard</a>
 					</li>
 					{% endif %}
+					{% if is_granted('ROLE_COLLABORATEUR') or is_granted('ROLE_ADMIN') %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('profil', {'id': app.user.id }) }}">
 							<i class="far fa-user fa-fw"></i>
 							Mon Profil</a>
 					</li>
+					{% endif %}
 
-					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+					{% if is_granted('ROLE_ADMIN') %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('add_profile') }}">
 							<i class="far fa-user-plus fa-fw"></i>
 							Ajouter un Profil</a>
 					</li>
+					{% endif %}
+					{% if is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_ADMIN') %}
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Paramètres
