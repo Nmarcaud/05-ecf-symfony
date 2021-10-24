@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserSkillType;
+use App\Repository\UserRepository;
 use App\Repository\UserSkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +19,13 @@ class UserSkillController extends AbstractController
 
     protected $userSkillRepository;
     protected $em;
+    protected $userRepository;
 
-    public function __construct(UserSkillRepository $userSkillRepository, EntityManagerInterface $em)
+    public function __construct(UserSkillRepository $userSkillRepository, EntityManagerInterface $em, UserRepository $userRepository)
     {
         $this->userSkillRepository = $userSkillRepository;
         $this->em = $em;
+        $this->userRepository = $userRepository;
     }
     /**
      * @Route("/", name="user_skill")

@@ -24,6 +24,13 @@
                                     <h5>Profession Inconnue !</h5>
                                 {% endif %}
                             </div>
+                            <div class="col col-lg-12">
+                             {% if profil.disponibility %}
+                                <h6><span class="grass-3 me-1"><i class="fas fa-circle"></i></span> Disponible</h6>
+                            {% else %}
+                                <h6><span class="grape-3 me-1"><i class="fas fa-circle"></i></span> Non Disponible</h6>
+                            {% endif %}
+                            </div>
                         </div>
 
                         {% if profil.status.name == "Candidat" %}

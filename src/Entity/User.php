@@ -113,6 +113,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $documents;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $disponibility;
+
     public function __construct()
     {
         $this->experiences = new ArrayCollection();
@@ -441,6 +446,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $document->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDisponibility(): ?bool
+    {
+        return $this->disponibility;
+    }
+
+    public function setDisponibility(bool $disponibility): self
+    {
+        $this->disponibility = $disponibility;
 
         return $this;
     }

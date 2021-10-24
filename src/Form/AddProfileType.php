@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
@@ -29,6 +30,13 @@ class AddProfileType extends AbstractType
                 'label' => 'Status'
                 ])
             ->add('jobTitle', TextType::class, ['label' => 'Intitulé du poste'])
+            ->add('disponibility', ChoiceType::class, [
+                'label' => 'Disponibilité',
+                'choices' => [
+                    'Disponible' => true,
+                    'Non Disponible' => false
+                ]
+            ])
 
             ->add('email', EmailType::class, ['label' => 'Email'])
             ->add('password', PasswordType::class, ['label' => 'Mot de passe'])
