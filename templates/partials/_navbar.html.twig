@@ -19,6 +19,11 @@
 					</li>
 
 					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('add_profile') }}">
+							<i class="far fa-user-plus fa-fw"></i>
+							Ajouter un Profil</a>
+					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Paramètres
@@ -56,14 +61,6 @@
 					{% endif %}
 					
 				</ul>
-				{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
-                <div class="nav-item ms-auto">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Compétence, Entreprise..." aria-label="Rechercher">
-                        <button class="btn btn-outline-secondary" type="submit">Rechercher</button>
-                    </form>
-                </div>
-				{% endif %}
 
 				{% if app.user %}
 					<div class="nav-item ms-auto">
@@ -78,8 +75,18 @@
 					</div>
 				{% endif %}
 
-
 			</div>
 		</div>
+		
 	</nav>
 </div>
+{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+<div class="container-fluid bg-white py-2">
+	<div class="container">
+		<form class="d-flex">
+			<input class="form-control me-2 border-0 py-3" type="search" placeholder="Rechercher par Nom, Compétence, Entreprise..." aria-label="Rechercher">
+			<button class="btn btn-outline-secondary my-2 px-4" type="submit">Rechercher</button>
+		</form>
+	</div>
+</div>
+{% endif %}

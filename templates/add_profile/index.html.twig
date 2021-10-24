@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Super Profil{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <div class="row">
+            <div class="col">
+
+                <div class="card">
+
+                    <div class="card-header p-4">
+                        <h1 class="fs-4 mb-0">Ajouter un Super Profil</h1>
+                    </div>
+                    <div class="card-body p-4">
+
+                        {{ form_start(formView) }}
+
+                        <div class="row">
+                            <div class="col-4">{{ form_row(formView.pictureUrl) }}</div>
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-12">{{ form_row(formView.firstname) }}</div>
+                                    <div class="col-12">{{ form_row(formView.lastname) }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row my-3">
+                            <div class="col">{{ form_row(formView.status) }}</div>
+                            <div class="col">{{ form_row(formView.jobTitle) }}</div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col">{{ form_row(formView.email) }}</div>
+                            <div class="col">{{ form_row(formView.phone) }}</div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col-12">{{ form_row(formView.adresse) }}</div>
+                            <div class="col">{{ form_row(formView.zipCode) }}</div>
+                            <div class="col">{{ form_row(formView.city) }}</div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col">{{ form_row(formView.apsideBirthday) }}</div>
+                        </div>
+
+                        {{ form_end(formView) }}
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

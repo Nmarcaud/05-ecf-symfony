@@ -51,12 +51,19 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $userId = $token->getUser()->getId();
+        // Récupération du User
+        $user = $token->getUser();
 
-        // Redirect to Profil
-        return new RedirectResponse($this->urlGenerator->generate('profil',[
-            "id" => $userId,
-        ]));
+        // If Admin -> Dashboard
+        if (in_array("ROLE_ADMIN", $user->getRoles()) || in_array("ROLE_COMMERCIAL", $user->getRoles())) {
+            return new RedirectResponse('/');
+
+        // Else -> Profile
+        } else {
+            $userId = $user->getId();
+            return new RedirectResponse($this->urlGenerator->generate('profil',["id" => $userId]));
+        }
+        
         // return new RedirectResponse('/');
         // return new RedirectResponse($this->urlGenerator->generate('/'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
