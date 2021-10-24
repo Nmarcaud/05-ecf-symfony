@@ -38,31 +38,6 @@ class CandidatsController extends AbstractController
 
 
     /**
-     * @Route("/{id}/edit", name="candidats_edit")
-     */
-    public function edit($id, UserRepository $userRepository, Request $request, EntityManagerInterface $em): Response
-    {
-        $candidat = $userRepository->find($id);
-
-        $form = $this->createForm(CandidatType::class, $candidat);    // 1 Création du formulaire,AVEC l'élément à modifier
-        $formView = $form->createView();                        // 2 Création de la vue
-
-        $form->handleRequest($request);                         // 3 Inspecte la request ( si form soumis )
-        if ($form->isSubmitted()) {                             // 4 Si, est soumis
-
-            $candidat->setModifiedAt(new \DateTime());             // 5 Datetime de modification
-            $em->flush();                                       // 6 Pas besoin de persist car déjà en base
-            
-            return $this->redirectToRoute('candidats', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('candidats/edit.html.twig', [
-            'formView' => $formView,
-            'candidat' => $candidat
-        ]);
-    }
-
-    /**
      * @Route("/{id}/delete", name="candidats_delete")
      */
     public function delete($id, UserRepository $userRepository, EntityManagerInterface $em): Response

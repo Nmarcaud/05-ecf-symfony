@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserInfoType extends AbstractType
@@ -25,6 +26,13 @@ class UserInfoType extends AbstractType
             ->add('city', TextType::class, ['label' => 'Ville'])
             ->add('phone', TextType::class, ['label' => 'Téléphone'])
             ->add('jobTitle', TextType::class, ['label' => 'Intitulé du poste'])
+            ->add('disponibility', ChoiceType::class, [
+                'label' => 'Disponibilité',
+                'choices' => [
+                    'Disponible' => true,
+                    'Non Disponible' => false
+                ]
+            ])
             ->add('status', EntityType::class, [
                 'class' => Status::class,
                 'label' => 'Téléphone'

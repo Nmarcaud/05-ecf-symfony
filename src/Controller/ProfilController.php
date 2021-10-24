@@ -15,24 +15,26 @@ use App\Repository\CategoryRepository;
 use App\Repository\ExperienceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class ProfilController extends AbstractController
 {
-
     protected $userRepository;
     protected $categoryRepository;
     protected $experienceRepository;
     protected $skillRepository;
     protected $em;
     protected $slugger;
+    protected $security;
 
-    public function __construct(UserRepository $userRepository, CategoryRepository $categoryRepository, ExperienceRepository $experienceRepository, SkillRepository $skillRepository, EntityManagerInterface $em, SluggerInterface $slugger)
+    public function __construct(UserRepository $userRepository, CategoryRepository $categoryRepository, ExperienceRepository $experienceRepository, SkillRepository $skillRepository, EntityManagerInterface $em, SluggerInterface $slugger, Security $security)
     {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
@@ -40,6 +42,7 @@ class ProfilController extends AbstractController
         $this->skillRepository = $skillRepository;
         $this->em = $em;
         $this->slugger = $slugger;
+        $this->security = $security;
     }
 
     
@@ -48,15 +51,28 @@ class ProfilController extends AbstractController
      */
     public function index($id, Request $request): Response
     {
+        // Get User connecté
+        $user = $this->security->getUser();
 
-        // Candidat ou Collaborateur
-        $profil = $this->userRepository->find($id);
+        // Vérification si autorisation d'accès 
+        /*
+            1. Admin -> full
+            2. Commercial -> full
+            3. Sinon, collaborateur connecté
+            TO DO : Trouvé un moyen de foutre tout ça en annotation ! Ok pour 1 et 2 mais comment faire 3 ? Piste : les VOTERS ?
+        */
+        if ($this->security->isGranted('ROLE_ADMIN') or $this->security->isGranted('ROLE_COMMERCIAL') or $this->security->isGranted('ROLE_COLLABORATEUR') and $user->getId() == $id) {
+            
 
-        // -----------------------------------//
-        // AFFICHAGE DES CATEGORIES NON VIDES //
-        // -----------------------------------//
+            // Récupération des infos du User 
+            $profil = $this->userRepository->find($id);
 
-            // Liste globale des catégories 
+
+            // -----------------------------------//
+            // AFFICHAGE DES CATEGORIES NON VIDES //
+            // -----------------------------------//
+
+            // Liste globale des catégories
             $categories = $this->categoryRepository->findAll();
             // Liste globale des skills
             $skills = $this->skillRepository->findAll();
@@ -70,150 +86,149 @@ class ProfilController extends AbstractController
             // Liste des catégories "concernées" par ce user
             $categoriesView = array();
 
-            foreach($categories as $categorie) {
-                foreach($skills as $skill) {
+            foreach ($categories as $categorie) {
+                foreach ($skills as $skill) {
 
                     // Si skill appartient à cette catégorie ( Je compare les noms )
                     if ($skill->getCategory()->getName() == $categorie->getName()) {
                         
                         // Si skill id est dans l'array du user, alors, add catégorie
-                        if (in_array($skill->getId(), $skillIds)){
-                            if(!in_array($categorie, $categoriesView)) {
+                        if (in_array($skill->getId(), $skillIds)) {
+                            if (!in_array($categorie, $categoriesView)) {
                                 array_push($categoriesView, $categorie);
                             }
-                        }  
+                        }
                     }
                 }
             }
         
-        // --------------------------//
-        // AFFICHAGE DES EXPERIENCES //
-        // --------------------------//
-        $experiences = $this->experienceRepository->findBy(['user' => $id]);
+
+            // --------------------------//
+            // AFFICHAGE DES EXPERIENCES //
+            // --------------------------//
+            $experiences = $this->experienceRepository->findBy(['user' => $id]);
 
 
-        // --------------------------------------------//
-        // FORMULAIRE DE MODIFICATION DES INFOS PERSOS //
-        // --------------------------------------------//
+            // --------------------------------------------//
+            // FORMULAIRE DE MODIFICATION DES INFOS PERSOS //
+            // --------------------------------------------//
+            $form = $this->createForm(UserInfoType::class, $profil);        // 1 Création du formulaire,AVEC l'élément à modifier
+            $formProfilInfoView = $form->createView();                      // 2 Création de la vue
 
-        $form = $this->createForm(UserInfoType::class, $profil);        // 1 Création du formulaire,AVEC l'élément à modifier
-        $formProfilInfoView = $form->createView();                      // 2 Création de la vue
+            $form->handleRequest($request);                                 // 3 Inspecte la request ( si form soumis )
+            if ($form->isSubmitted()) {                                     // 4 Si, est soumis
 
-        $form->handleRequest($request);                                 // 3 Inspecte la request ( si form soumis )
-        if ($form->isSubmitted()) {                                     // 4 Si, est soumis
-
-            $profil->setModifiedAt(new \DateTime());                      // 5 Datetime de modification
-            $this->em->flush();                                         // 6 Pas besoin de persist car déjà en base
-            
-            return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
-        }
-
-
-        // -----------------------------//
-        // FORMULAIRE D'AJOUT DE SKILLS //
-        // -----------------------------//
-        $userSkill = new UserSkill;
-
-        $form = $this->createForm(UserSkillType::class, $userSkill);
-        $formAddSkillView = $form->createView();
-
-        $form->handleRequest($request); 
-        if ($form->isSubmitted()) {
-
-            $userSkill->setUser($profil);
-            $userSkill->setCreatedAt(new \DateTime());
-
-            // Update du User
-            $profil->setModifiedAt(new \DateTime());
-
-            $this->em->persist($userSkill);
-            $this->em->flush();
-
-            return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
-        }
-
-        // --------------------------------//
-        // FORMULAIRE D'AJOUT D'EXPERIENCE //
-        // --------------------------------//
-        $experience = new Experience;
-
-        $form = $this->createForm(ExperienceType::class, $experience);
-        $formAddExperrienceView = $form->createView();
-
-        $form->handleRequest($request); 
-        if ($form->isSubmitted()) {
-
-            $experience->setUser($profil);
-            $experience->setCreatedAt(new \DateTime());
-
-            // Update du User
-            $profil->setModifiedAt(new \DateTime());
-
-            $this->em->persist($experience);
-            $this->em->flush();
-
-            return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
-        }
+                $profil->setModifiedAt(new \DateTime());                      // 5 Datetime de modification
+                $this->em->flush();                                         // 6 Pas besoin de persist car déjà en base
+                
+                return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
+            }
 
 
-        // ---------------------------------//
-        // FORMULAIRE D'AJOUT D'UN DOCUMENT //
-        // ---------------------------------//
-        $document = new Document;
+            // -----------------------------//
+            // FORMULAIRE D'AJOUT DE SKILLS //
+            // -----------------------------//
+            $userSkill = new UserSkill;
 
-        $form = $this->createForm(AddDocumentType::class, $document);
-        $formAddDocumentView = $form->createView();
+            $form = $this->createForm(UserSkillType::class, $userSkill);
+            $formAddSkillView = $form->createView();
 
-        $form->handleRequest($request); 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                $userSkill->setUser($profil);
+                $userSkill->setCreatedAt(new \DateTime());
+
+                // Update du User
+                $profil->setModifiedAt(new \DateTime());
+
+                $this->em->persist($userSkill);
+                $this->em->flush();
+
+                return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
+            }
+
+            // --------------------------------//
+            // FORMULAIRE D'AJOUT D'EXPERIENCE //
+            // --------------------------------//
+            $experience = new Experience;
+
+            $form = $this->createForm(ExperienceType::class, $experience);
+            $formAddExperrienceView = $form->createView();
+
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                $experience->setUser($profil);
+                $experience->setCreatedAt(new \DateTime());
+
+                // Update du User
+                $profil->setModifiedAt(new \DateTime());
+
+                $this->em->persist($experience);
+                $this->em->flush();
+
+                return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
+            }
+
+
+            // ---------------------------------//
+            // FORMULAIRE D'AJOUT D'UN DOCUMENT //
+            // ---------------------------------//
+            $document = new Document;
+
+            $form = $this->createForm(AddDocumentType::class, $document);
+            $formAddDocumentView = $form->createView();
+
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var UploadedFile $documentFile */
-            $documentFile = $form->get('file')->getData();
+                $documentFile = $form->get('file')->getData();
 
-            // Renommage
-            if ($form->get('name')->getData() != null) {
-                $originalFilename = $form->get('name')->getData();
-            } else {
-                $originalFilename = pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // Renommage
+                if ($form->get('name')->getData() != null) {
+                    $originalFilename = $form->get('name')->getData();
+                } else {
+                    $originalFilename = pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME);
+                }
+        
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $this->slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$documentFile->guessExtension();
+
+                // Move the file to the directory where documents are stored
+                try {
+                    $documentFile->move(
+                        $this->getParameter('document_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    dd($e);
+                }
+                $document->setFile($newFilename);
+
+                $document->setUser($profil);
+                $document->setCreatedAt(new \DateTime());
+
+                // Update du User
+                $profil->setModifiedAt(new \DateTime());
+
+                $this->em->persist($document);
+                $this->em->flush();
+
+                return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
             }
-           
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $this->slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$documentFile->guessExtension();
-
-            // Move the file to the directory where documents are stored
-            try {
-                $documentFile->move(
-                    $this->getParameter('document_directory'),
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-                dd($e);
-            }        
-            $document->setFile($newFilename);
-
-            $document->setUser($profil);
-            $document->setCreatedAt(new \DateTime());
-
-            // Update du User
-            $profil->setModifiedAt(new \DateTime());
-            
-            $this->em->persist($document);
-            $this->em->flush();
-
-            return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
-        }
 
     
-        return $this->render('profil/index.html.twig', [
-            'profil' => $profil,
-            'categories' => $categoriesView,
-            'experiences' => $experiences,
-            'formProfilInfoView' => $formProfilInfoView,
-            'formAddSkillView' => $formAddSkillView,
-            'formAddExperrienceView' => $formAddExperrienceView,
-            'formAddDocumentView' => $formAddDocumentView
-        ]);
+            return $this->render('profil/index.html.twig', [
+                'profil' => $profil,
+                'categories' => $categoriesView,
+                'experiences' => $experiences,
+                'formProfilInfoView' => $formProfilInfoView,
+                'formAddSkillView' => $formAddSkillView,
+                'formAddExperrienceView' => $formAddExperrienceView,
+                'formAddDocumentView' => $formAddDocumentView
+            ]);
+        }
     }
 }
