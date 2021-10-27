@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -61,8 +60,7 @@ class ProfilController extends AbstractController
             3. Sinon, collaborateur connecté
             TO DO : Trouvé un moyen de foutre tout ça en annotation ! Ok pour 1 et 2 mais comment faire 3 ? Piste : les VOTERS ?
         */
-        if ($this->security->isGranted('ROLE_ADMIN') or $this->security->isGranted('ROLE_COMMERCIAL') or $this->security->isGranted('ROLE_COLLABORATEUR') and $user->getId() == $id) {
-            
+        
 
             // Récupération des infos du User 
             $profil = $this->userRepository->find($id);
@@ -216,7 +214,7 @@ class ProfilController extends AbstractController
                 $this->em->persist($document);
                 $this->em->flush();
 
-                return $this->redirectToRoute('profil', ["id" => $id], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('profil', ["id" => $id]);
             }
 
     
@@ -229,6 +227,6 @@ class ProfilController extends AbstractController
                 'formAddExperrienceView' => $formAddExperrienceView,
                 'formAddDocumentView' => $formAddDocumentView
             ]);
-        }
+        
     }
 }
