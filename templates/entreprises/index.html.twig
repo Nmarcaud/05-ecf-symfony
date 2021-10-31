@@ -1,27 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EntrepriseController!{% endblock %}
+{% block title %}Liste des Entreprises{% endblock %}
 
 {% block body %}
-    <div class="container">
 
-        <h1>Liste des Entreprises</h1>
-        
-        {% for entreprise in entreprises %}
-            
-            <!-- Row Skill -->
-            <div class="row">
-                <div class="col">
-                    {{ entreprise.id }}
-                </div>
-                <div class="col">
-                    {{ entreprise.name }}
-                </div>
-                <div class="col">
-                    <p>action</p>
-                </div>
-            </div>
-
-        {% endfor %}
+    <!-- Titre et Action -->
+    <div class="row d-flex align-items-center my-4">
+        <div class="col">
+            <h1 class="my-4">Liste des Entreprises</h1>
+        </div>
+        <div class="col text-end">
+            <a class="btn btn-primary" href="{{ path ('entreprises_create')}}">Ajouter une entreprise</a>
+        </div>
     </div>
+
+    <!-- En tête tableau -->
+    <div class="row my-2 py-1">
+        <div class="col">
+            <span class="fw-bold">Nom</span>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <!-- Tableau -->
+    {% for entreprise in entreprises %}
+        <!-- Row Skill -->
+        <div class="row d-flex align-items-center my-2 py-2 rounded table-row">
+            <div class="col">
+                {{ entreprise.name }}
+            </div>
+            <div class="col text-end">
+                <a class="blue-3  mx-1" href="{{ path ('entreprises_edit', {'id': entreprise.id})}}"><i class="far fa-pen fa-fw"></i></a>
+                <a class="grape-3 mx-1" href="{{ path ('entreprises_delete', {'id': entreprise.id})}}"><i class="far fa-times fa-fw"></i></a>
+            </div>
+        </div>
+
+    {% endfor %}
+        
 {% endblock %}

@@ -26,7 +26,7 @@ class AddDocumentType extends AbstractType
                 ])
             // ->add('url', UrlType::class, ['label' => 'Url'])
             ->add('submit', SubmitType::class, [
-                'label' => 'Ajouter le Document'
+                'label' => 'Ajouter le document'
             ]);
         ;
     }

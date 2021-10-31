@@ -5,11 +5,15 @@
 
 {% block body %}
 
-	<div class="row d-flex align-items-center my-4">
-		<div class="col">
-			<h1 class="my-4">Créer une catégorie</h1>
-		</div>
-	</div>
+	<!-- Titre et Action -->
+    <div class="row d-flex align-items-center my-4">
+        <div class="col">
+            <h1 class="my-4">Créer une catégorie</h1>
+        </div>
+        <div class="col text-end">
+            <a class="btn btn-primary" href="{{ path ('category')}}">Retour</a>
+        </div>
+    </div>
 
 	{{ form_start(formView) }}
 

@@ -50,7 +50,7 @@ class AddProfileType extends AbstractType
             ->add('apsideBirthday', DateType::class, ['label' => 'Date d\'entrée chez Apside'])
             
             ->add('submit', SubmitType::class, [
-                'label' => 'Ajouter le Profil'
+                'label' => 'Ajouter le profil'
             ]);
         ;
     }

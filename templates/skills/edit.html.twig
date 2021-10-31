@@ -4,26 +4,26 @@
 
 {% block body %}
 
-    <div class="container">
-
-        <div class="row d-flex align-items-center my-4">
-            <div class="col">
-                <h1 class="my-4">Modifier une compétence</h1>
-            </div>
+    <!-- Titre et Action -->
+    <div class="row d-flex align-items-center my-4">
+        <div class="col">
+            <h1 class="my-4">Modifier une compétence</h1>
         </div>
-
-        {{ form_start(formView) }}
-
-        <div class="row">
-            <div class="col">{{ form_row(formView.name) }}</div>
-            <div class="col">{{ form_row(formView.category) }}</div>
+        <div class="col text-end">
+            <a class="btn btn-primary" href="{{ path ('skills')}}">Retour</a>
         </div>
-        <div class="row">
-            <div class="col"><button type="submit" class="btn btn-primary">Modifier la compétence</button></div>
-        </div>
-        
-        {{ form_end(formView) }}
-        
     </div>
 
+    {{ form_start(formView) }}
+
+    <div class="row">
+        <div class="col">{{ form_row(formView.name) }}</div>
+        <div class="col">{{ form_row(formView.category) }}</div>
+    </div>
+    <div class="row">
+        <div class="col"><button type="submit" class="btn btn-primary">Modifier la compétence</button></div>
+    </div>
+    
+    {{ form_end(formView) }}
+    
 {% endblock %}

@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier une catégorie
+{% block title %}Créer une entreprise
 {% endblock %}
 
 {% block body %}
 
-	<!-- Titre et Action -->
+    <!-- Titre et Action -->
     <div class="row d-flex align-items-center my-4">
         <div class="col">
-            <h1 class="my-4">Modifier une catégorie</h1>
+            <h1 class="my-4">Créer une entreprise</h1>
         </div>
         <div class="col text-end">
-            <a class="btn btn-primary" href="{{ path ('category')}}">Retour</a>
+            <a class="btn btn-primary" href="{{ path ('entreprises')}}">Retour</a>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
 		<div class="col"></div>
 	</div>
     <div class="row">
-		<div class="col"><button type="submit" class="btn btn-primary">Modifier la catégorie</button></div>
+		<div class="col-auto"><button type="submit" class="btn btn-primary">Créer l'entreprise</button></div>
 	</div>
 
 	{{ form_end(formView) }}
