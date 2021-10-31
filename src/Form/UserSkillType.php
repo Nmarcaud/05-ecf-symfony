@@ -36,9 +36,6 @@ class UserSkillType extends AbstractType
                     'max' => 5
                 ],
                 'help' => 'Entre 1 et 5',
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Ajouter'
             ]);
             
     }

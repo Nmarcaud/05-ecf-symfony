@@ -34,10 +34,7 @@ class ExperienceType extends AbstractType
             ->add('Entreprise', EntityType::class, [
                 'class' => Entreprise::class,
                 'label' => 'Entreprise'
-                ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Modifier'
-            ]);
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
