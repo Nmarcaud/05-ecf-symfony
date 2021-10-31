@@ -12,8 +12,8 @@ class ProfilVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['POST_EDIT', 'POST_VIEW'])
-            && $subject instanceof \App\Entity\Profil;
+        return in_array($attribute, ['CAN_SEE_AND_EDIT'])
+            && $subject instanceof \App\Entity\User;
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
@@ -26,14 +26,10 @@ class ProfilVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
-            case 'POST_EDIT':
+            case 'CAN_SEE_AND_EDIT':
                 // logic to determine if the user can EDIT
                 // return true or false
-                break;
-            case 'POST_VIEW':
-                // logic to determine if the user can VIEW
-                // return true or false
-                break;
+                return $subject->getId() === $user->getId();
         }
 
         return false;
