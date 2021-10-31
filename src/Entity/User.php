@@ -124,6 +124,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->userSkills = new ArrayCollection();
         $this->documents = new ArrayCollection();
     }
+    public function __toString()
+    {
+        return (string) $this->getFirstname();
+    }
 
   
 

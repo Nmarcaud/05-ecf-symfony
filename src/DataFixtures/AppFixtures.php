@@ -49,8 +49,6 @@ class AppFixtures extends Fixture
             $manager->persist($entreprise);
         }
 
-
-
         // Function experience
         /* Je génère un nbre random d'expériences / La focntion me permet de la réultilser pur chaque type de status */
         function addXp($faker, $user, $manager, $listEntreprises) {

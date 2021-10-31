@@ -54,3 +54,12 @@
     transform: scale(1.05);
 }
 
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    transition: .4s;
+}
+.card-link:hover {
+    color: inherit;
+    transform: scale(1.05);
+}

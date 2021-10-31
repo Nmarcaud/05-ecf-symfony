@@ -51,7 +51,7 @@ class ProfilController extends AbstractController
     public function index($id, Request $request): Response
     {
         // Get User connecté
-        $user = $this->security->getUser();
+        // $user = $this->security->getUser();
 
         // Vérification si autorisation d'accès 
         /*
@@ -61,10 +61,8 @@ class ProfilController extends AbstractController
             TO DO : Trouvé un moyen de foutre tout ça en annotation ! Ok pour 1 et 2 mais comment faire 3 ? Piste : les VOTERS ?
         */
         
-
             // Récupération des infos du User 
-            $profil = $this->userRepository->find($id);
-
+            $profil = $this->userRepository->findOneBy(['id' => $id]);
 
             // -----------------------------------//
             // AFFICHAGE DES CATEGORIES NON VIDES //
@@ -179,7 +177,7 @@ class ProfilController extends AbstractController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
 
-            /** @var UploadedFile $documentFile */
+                /** @var UploadedFile $documentFile */
                 $documentFile = $form->get('file')->getData();
 
                 // Renommage
