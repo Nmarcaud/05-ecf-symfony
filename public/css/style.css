@@ -1,3 +1,6 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
 
 .table-img {
     object-fit: cover;
@@ -13,6 +16,7 @@
 .table-row {
     transition: .4s;
 }
+
 .table-row:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 0 #f1f1f1;
@@ -28,28 +32,32 @@
 
 .card {
     border-radius: 1em;
-    transition: .4s;
-    box-shadow: 2px 2px 15px rgba(0,0,0,.07); 
+    transition: .6s;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, .07);
 }
 
 .card-header {
     border-radius: 1em 1em 0 0 !important;
 }
+
 .card-header-action {
     border-radius: 1em !important;
-    transition: .4s;
+    transition: .6s;
     border: 0;
 }
+
 .card-header-action:hover {
     background-color: #4b89da;
     color: White;
     cursor: pointer;
     transform: scale(1.01);
-    box-shadow: 2px 2px 15px rgba(0,0,0,.07); 
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, .07);
 }
+
 .card-footer {
     border-radius: 0 0 1em 1em !important;
 }
+
 .card-profil:hover {
     transform: scale(1.05);
 }
@@ -57,9 +65,47 @@
 .card-link {
     text-decoration: none;
     color: inherit;
-    transition: .4s;
+    transition: .6s;
 }
+
 .card-link:hover {
     color: inherit;
     transform: scale(1.05);
+}
+
+
+
+
+
+
+.btn-primary {
+    background-color: #5e9cea !important;
+    color:white !important;
+    transition: .6s;
+    border: 0;
+    border-radius: 1em;
+    padding: .5em 1.5em;
+}
+.btn-primary:hover {
+    background-color: #4b89da !important;
+    transform: translateY(-0.2em);
+}
+
+
+.nav-primary {
+    margin: .2em !important;
+    color: #5e9cea !important;
+    border-radius: 1em !important;
+    padding: .5em 1em !important;
+    transition: .6s !important;
+}
+.nav-primary:hover,
+#pills-tab .active:hover {
+    background-color: #4b89da !important;
+    color:white !important;
+}
+
+#pills-tab .active {
+    background-color: #5e9cea !important;
+    color:white !important;
 }

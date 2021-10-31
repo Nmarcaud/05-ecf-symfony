@@ -9,7 +9,7 @@
         <!-- Titre et Action -->
         <div class="row d-flex align-items-center my-4">
             <div class="col">
-                <h1>Liste des compétences</h1>
+                <h1 class="my-4">Liste des Compétences</h1>
             </div>
             <div class="col text-end">
                 <a class="btn btn-primary" href="{{ path ('skills_create')}}">Ajouter une compétence</a>
@@ -19,10 +19,10 @@
         <!-- En tête tableau -->
         <div class="row my-2 py-1">
             <div class="col">
-                <strong>Id</strong>
+                <span class="fw-bold">Nom</span>
             </div>
             <div class="col">
-                <strong>Nom</strong>
+                <span class="fw-bold">Catégorie</span>
             </div>
             <div class="col"></div>
         </div>
@@ -30,20 +30,16 @@
         <!-- Tableau -->
         {% for skill in skills %}
             <!-- Row Skill -->
-            <div class="row d-flex align-items-center my-2 py-1 rounded table-row">
-                <div class="col">
-                    {{ skill.id }}
-                </div>
+            <div class="row d-flex align-items-center my-2 py-2 rounded table-row">
                 <div class="col">
                     {{ skill.name }}
                 </div>
-                <div class="col-auto text-end">
-                    <a class="grass-2 px-3" href="{{ path ('skills_edit', {'id': skill.id})}}">
-						<i class="far fa-pen"></i>
-					</a>
-					<a class="grape-2 px-3" href="{{ path ('skills_delete', {'id': skill.id})}}">
-						<i class="far fa-times"></i>
-					</a>
+                <div class="col">
+                    {{ skill.category }}
+                </div>
+                <div class="col text-end">
+                    <a class="blue-3  mx-1" href="{{ path ('skills_edit', {'id': skill.id})}}"><i class="far fa-pen fa-fw"></i></a>
+					<a class="grape-3 mx-1" href="{{ path ('skills_delete', {'id': skill.id})}}"><i class="far fa-times fa-fw"></i></a>
                 </div>
             </div>
 
