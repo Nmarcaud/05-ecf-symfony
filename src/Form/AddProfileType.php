@@ -22,8 +22,14 @@ class AddProfileType extends AbstractType
         $builder
             ->add('pictureUrl')
 
-            ->add('firstname', TextType::class, ['label' => 'Prénom'])
-            ->add('lastname', TextType::class, ['label' => 'Nom'])
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom',
+                'required' => true
+                ])
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom',
+                'required' => true
+                ])
 
             ->add('status', EntityType::class, [
                 'class' => Status::class,
@@ -38,7 +44,10 @@ class AddProfileType extends AbstractType
                 ]
             ])
 
-            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('email', EmailType::class, [
+                'label' => 'Email',
+                'required' => true
+                ])
             ->add('password', PasswordType::class, ['label' => 'Mot de passe'])
 
             ->add('phone', TextType::class, ['label' => 'Téléphone'])
@@ -47,7 +56,9 @@ class AddProfileType extends AbstractType
             ->add('zipCode', TextType::class, ['label' => 'Code Postal'])
             ->add('city', TextType::class, ['label' => 'Ville'])
             
-            ->add('apsideBirthday', DateType::class, ['label' => 'Date d\'entrée chez Apside'])
+            ->add('apsideBirthday', DateType::class, [
+                'label' => 'Date d\'entrée chez Apside'
+                ])
             
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter le profil'

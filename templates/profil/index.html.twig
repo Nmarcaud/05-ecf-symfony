@@ -4,363 +4,362 @@
 
 {% block body %}
 
-    <div class="container py-4">
-        <div class="row">
-            <!-- Infos col -->
-            <div class="col-12 col-lg-4 my-3">
+    <div class="row py-4">
+        <!-- Infos col -->
+        <div class="col-12 col-lg-4 my-3">
 
-                <div class="card">
+            <div class="card">
 
-                    <div class="card-header p-4">
-                        <div class="row text-lg-center d-flex align-items-center">
-                            <div class="col-auto col-lg-12 my-3 text-center">
-                                <img src="{{ profil.pictureUrl }}" alt="{{ profil.firstname }} {{ profil.lastname }}" class="profil-picture">
-                            </div>
-                            <div class="col col-lg-12">
-                                <h2 class="fs-4">{{ profil.firstname }} {{ profil.lastname|upper }}</h2>
-                                {% if profil.jobTitle %}
-                                    <h5>{{ profil.jobTitle }}</h5>
-                                {% else %}
-                                    <h5>Profession Inconnue !</h5>
-                                {% endif %}
-                            </div>
-                            <div class="col col-lg-12">
-                             {% if profil.disponibility %}
-                                <h6><span class="grass-3 me-1"><i class="fas fa-circle"></i></span> Disponible</h6>
+                <div class="card-header p-4">
+                    <div class="row text-lg-center d-flex align-items-center">
+                        <div class="col-auto col-lg-12 my-3 text-center">
+                            <img src="{{ profil.pictureUrl }}" alt="{{ profil.firstname }} {{ profil.lastname }}" class="profil-picture">
+                        </div>
+                        <div class="col col-lg-12">
+                            <h2 class="fs-4">{{ profil.firstname }} {{ profil.lastname|upper }}</h2>
+                            {% if profil.jobTitle %}
+                                <h5>{{ profil.jobTitle }}</h5>
                             {% else %}
-                                <h6><span class="grape-3 me-1"><i class="fas fa-circle"></i></span> Non Disponible</h6>
+                                <h5>Profession Inconnue !</h5>
                             {% endif %}
+                        </div>
+                        <div class="col col-lg-12">
+                            {% if profil.disponibility %}
+                            <h6><span class="grass-3 me-1"><i class="fas fa-circle"></i></span> Disponible</h6>
+                        {% else %}
+                            <h6><span class="grape-3 me-1"><i class="fas fa-circle"></i></span> Non Disponible</h6>
+                        {% endif %}
+                        </div>
+                    </div>
+
+                    {% if profil.status.name == "Candidat" %}
+                    <div class="row mt-3">
+                        <div class="col-12 ">
+                            <div class="card bg-sunflo-3 text-center">
+                                <div class="card-body"> <h5 class="m-0"><i class="far fa-user-tie"></i> CANDIDAT</h5></div>
                             </div>
                         </div>
-
-                        {% if profil.status.name == "Candidat" %}
-                        <div class="row mt-3">
-                            <div class="col-12 ">
-                                <div class="card bg-sunflo-3 text-center">
-                                    <div class="card-body"> <h5 class="m-0"><i class="far fa-user-tie"></i> CANDIDAT</h5></div>
-                                </div>
+                    </div>
+                    {% endif %}
+                    {% if profil.status.name == "Collaborateur" %}
+                    <div class="row mt-3">
+                        <div class="col-12 ">
+                            <div class="card bg-blue-3 text-center">
+                                <div class="card-body"> <h5 class="m-0"><i class="far fa-user-tie"></i> COLLABORATEUR</h5></div>
                             </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Body card presentation -->
+                <div class="card-body">
+                    <div class="row p-3 g-4">
+
+                        <!-- Email -->
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <p class="mb-0">Email</p>
+                            <small class="dg-1">{{ profil.email }}</small>
+                        </div>
+
+                        <!-- Téléphone -->
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <p class="mb-0">Téléphone</p>
+                            <small class="dg-1">{{ profil.phone }}</small>
+                        </div>
+
+                        <!-- Date Anniversaire -->
+                        {% if profil.apsideBirthday %}
+                        <div class="col-12">
+                            <p class="mb-0">Anniversaire Apside</p>
+                            <small class="dg-1">{{ profil.apsideBirthday|date('d-m-Y') }}</small>
                         </div>
                         {% endif %}
-                        {% if profil.status.name == "Collaborateur" %}
-                        <div class="row mt-3">
-                            <div class="col-12 ">
-                                <div class="card bg-blue-3 text-center">
-                                    <div class="card-body"> <h5 class="m-0"><i class="far fa-user-tie"></i> COLLABORATEUR</h5></div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
 
-                    <!-- Body card presentation -->
-                    <div class="card-body">
-                        <div class="row p-3 g-4">
-
-                            <!-- Email -->
-                            <div class="col-12 col-md-6 col-lg-12">
-                                <p class="mb-0">Email</p>
-                                <small class="dg-1">{{ profil.email }}</small>
-                            </div>
-
-                            <!-- Téléphone -->
-                            <div class="col-12 col-md-6 col-lg-12">
-                                <p class="mb-0">Téléphone</p>
-                                <small class="dg-1">{{ profil.phone }}</small>
-                            </div>
-
-                            <!-- Date Anniversaire -->
-                            {% if profil.apsideBirthday %}
-                            <div class="col-12">
-                                <p class="mb-0">Anniversaire Apside</p>
-                                <small class="dg-1">{{ profil.apsideBirthday|date('d-m-Y') }}</small>
-                            </div>
-                            {% endif %}
-
-                            <!-- Adresse -->
-                            <div class="col-12">
-                                <p class="mb-0">Adresse</p>
-                                <small class="dg-1">{{ profil.adresse }}</small>
-                            </div>
-
-                            <!-- Code Postal -->
-                            <div class="col-12 col-md-6">
-                                <p class="mb-0">Code Postal</p>
-                                <small class="dg-1">{{ profil.zipCode }}</small>
-                            </div>
-
-                            <!-- Ville -->
-                            <div class="col-12 col-md-6">
-                                <p class="mb-0">Ville</p>
-                                <small class="dg-1">{{ profil.city }}</small>
-                            </div>
-
-                            <!-- Compétences Principales -->
-                            <div class="col-12">
-                                <p class="mb-1">Compétences Principales</p>
-
-                                {% for skill in profil.userSkills %}
-                                    {% if skill.level >= 3 %}
-                                        <span class="badge rounded-pill bg-blue-2 px-3 py-2">{{ skill.skill.name }}</span>
-                                    {% endif %}
-                                {% endfor %}
-                                
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-lg-8 my-3">
-                <div class="card bg-light">
-                    <div class="card-body">
-                        <ul class="nav nav-pills m-1" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link nav-primary active" id="skill-tab" data-bs-toggle="tab" data-bs-target="#skill" type="button" role="tab" aria-controls="skill" aria-selected="true">Compétences</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link nav-primary" id="missions-tab" data-bs-toggle="tab" data-bs-target="#missions" type="button" role="tab" aria-controls="missions" aria-selected="false">Historique des missions</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link nav-primary" id="fichiers-tab" data-bs-toggle="tab" data-bs-target="#fichiers" type="button" role="tab" aria-controls="fichiers" aria-selected="false">Fichiers</button>
-                            </li>
-                            <li class="nav-item ms-auto" role="presentation">
-                                <button class="nav-link nav-primary" id="parameter-tab" data-bs-toggle="tab" data-bs-target="#parameter" type="button" role="tab" aria-controls="parameter" aria-selected="false">Paramètres</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="tab-content mt-3" id="myTabContent">
-                    <div class="tab-pane fade show active" id="skill" role="tabpanel" aria-labelledby="skill-tab">
-                        
-                        <!-- Ajouter des Compétences-->
-                        <div class="row my-3">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseSkillForm" role="button" aria-expanded="false" aria-controls="collapseSkillForm">
-                                        <h5 class="m-3">Ajouter une compétence</h5>
-                                    </div>
-                                     <div class="card-body p-4 collapse" id="collapseSkillForm">
-                                        {{ form_start(formAddSkillView) }}
-                                        <div class="row">
-                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.skill) }}</div>
-                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.apprecied) }}</div>
-                                            <div class="col-12 col-xl">{{ form_row(formAddSkillView.level) }}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col"><button type="submit" class="btn btn-primary">Ajouter la compétence</button></div>
-                                        </div>
-                                        {{ form_end(formAddSkillView) }}
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Adresse -->
+                        <div class="col-12">
+                            <p class="mb-0">Adresse</p>
+                            <small class="dg-1">{{ profil.adresse }}</small>
                         </div>
 
-                        {% for category in categories %}
-                            <div class="row mb-3 g-3">
-
-                                <div class="col-12">
-                                    <h4 class="mt-2 mb-0">{{ category.name }}</h4>
-                                </div>
-
-                                {% for skill in profil.userSkills %}
-                                    {% if category.name == skill.skill.category.name %}
-                                        <div class="col-12 col-md-6 col-xl-4">
-                                            <div class="card">
-                                                <div class="card-body">
-
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <h4 class="fs-5">
-                                                                {{ skill.skill.name }}
-
-                                                                {% if skill.apprecied == true %}
-                                                                    <i class="fas fa-fw fa-heart grape-2"></i>
-                                                                {% endif %}
-                                                            </h4>
-                                                        </div>
-                                                        <div class="col-auto text-end">
-                                                            <a class="blue-3 mx-1" href="{{ path ('user_skills_edit', {'user_skill_id': skill.id})}}"><i class="far fa-edit"></i></a>
-                                                            <a class="grape-3" href="{{ path ('user_skills_delete', {'user_skill_id': skill.id})}}"><i class="far fa-times"></i></a>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mt-2">
-                                                        <div class="col">
-                                                            <div class="progress" style="height: 1.5em;">
-                                                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ (skill.level / 5) * 100 }}%" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="5">{{ skill.level }} / 5</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-
-                        {% endfor %}
-
-                        
-                    
-                    </div>
-                    <div class="tab-pane fade" id="missions" role="tabpanel" aria-labelledby="missions-tab">
-
-
-                        <!-- Ajouter Une Expérience-->
-                        <div class="row my-3">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseExpForm" role="button" aria-expanded="false" aria-controls="collapseExpForm">
-                                        <h5 class="m-3">Ajouter une expérience</h5>
-                                    </div>
-                                    <div class="card-body p-4 collapse" id="collapseExpForm">
-                                        {{ form_start(formAddExperrienceView) }}
-                                        <div class="row">
-                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.startDate) }}</div>
-                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.endDate) }}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.title) }}</div>
-                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.Entreprise) }}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.description) }}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col"><button type="submit" class="btn btn-primary">Ajouter l'expérience</button></div>
-                                        </div>
-                                        {{ form_end(formAddExperrienceView) }}
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Code Postal -->
+                        <div class="col-12 col-md-6">
+                            <p class="mb-0">Code Postal</p>
+                            <small class="dg-1">{{ profil.zipCode }}</small>
                         </div>
 
-                        <!-- Expériences -->
-                        <div class="row d-flex flex-column-reverse">
-                            {% for experience in experiences %}
-                                <div class="col-12">
-                                    <div class="card mb-3">
-                                        <div class="card-header">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <p class="mb-0"><i class="far fa-starship"></i> {{ experience.entreprise.name }}</p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="mb-0"><i class="far fa-calendar-alt"></i> Du <span class="dg-1">{{ experience.startDate|date('d-m-Y') }}</span> au <span class="dg-1">{{ experience.endDate|date('d-m-Y') }}</span></p>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <a class="blue-3 mx-1" href="{{ path ('experience_edit', {'id_exp': experience.id})}}"><i class="far fa-edit"></i></a>
-                                                    <a class="grape-3 mx-1" href="{{ path ('experience_delete', {'id_exp': experience.id})}}"><i class="far fa-times"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h6><i class="far fa-id-card-alt"></i> {{ experience.title }}</h6>
-                                            <p>{{ experience.description }}</p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Ville -->
+                        <div class="col-12 col-md-6">
+                            <p class="mb-0">Ville</p>
+                            <small class="dg-1">{{ profil.city }}</small>
+                        </div>
+
+                        <!-- Compétences Principales -->
+                        <div class="col-12">
+                            <p class="mb-1">Compétences Principales</p>
+
+                            {% for skill in profil.userSkills %}
+                                {% if skill.level >= 3 %}
+                                    <span class="badge rounded-pill bg-blue-2 px-3 py-2">{{ skill.skill.name }}</span>
+                                {% endif %}
                             {% endfor %}
+                            
                         </div>
 
-                    </div>
-                    <div class="tab-pane fade" id="fichiers" role="tabpanel" aria-labelledby="fichiers-tab">
-                        
-                        <!-- Ajouter un Document -->
-                        <!-- Sources : https://symfony.com/doc/current/controller/upload_file.html -->
-                        <div class="row my-3">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseExpForm" role="button" aria-expanded="false" aria-controls="collapseExpForm">
-                                        <h5 class="m-3">Ajouter un Document</h5>
-                                    </div>
-                                    <div class="card-body p-4 collapse" id="collapseExpForm">
-                                        {{ form_start(formAddDocumentView) }}
-                                            {{ form_row(formAddDocumentView.file) }}
-                                            {{ form_row(formAddDocumentView.name) }}
-                                        {{ form_end(formAddDocumentView) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                         <!-- Documents -->
-                        <div class="row d-flex flex-column-reverse">
-                            {% for document in profil.documents %}
-                                <div class="col-12">
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <p class="mb-0 d-flex align-items-center">
-
-                                                <!-- Fichié renomé ou non -->
-                                                {% if document.name %}
-                                                <i class="far fa-file fa-fw me-1"></i> {{ document.name }} 
-                                                {% else %}
-                                                <i class="far fa-file fa-fw me-1"></i> {{ document.file }} 
-                                                {% endif %}
-
-                                                <span class="text-muted ms-1"> - Ajouté le {{ document.createdAt|date('d/m/Y') }}</span> 
-                                                <a class="blue-3 ms-auto" href="{{ asset('uploads/documents/' ~ document.file) }}">
-                                                    <i class="far fa-eye"></i> coup d'oeil
-                                                </a>
-                                                <a class="grape-3 ms-1" href="{{ path ('document_delete', {'document_id': document.id})}}"><i class="far fa-times fa-fw"></i></a>
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="parameter" role="tabpanel" aria-labelledby="parameter-tab">
-                    
-                        <div class="card">
-
-                            <div class="card-header">
-                                <h4 class="m-3">Modifier mes informations</h4>
-                            </div>
-                            <div class="card-body p-4">
-                                
-                                {# Form de modification #}
-                                {{ form_start(formProfilInfoView) }}
-
-                                <div class="row">
-                                    <div class="col">{{ form_row(formProfilInfoView.firstname) }}</div>
-                                    <div class="col">{{ form_row(formProfilInfoView.lastname) }}</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col">{{ form_row(formProfilInfoView.status) }}</div>
-                                    <div class="col">{{ form_row(formProfilInfoView.jobTitle) }}</div>
-                                    <div class="col">{{ form_row(formProfilInfoView.disponibility) }}</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col">{{ form_row(formProfilInfoView.email) }}</div>
-                                    <div class="col">{{ form_row(formProfilInfoView.phone) }}</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col">{{ form_row(formProfilInfoView.adresse) }}</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col">{{ form_row(formProfilInfoView.zip_code) }}</div>
-                                    <div class="col">{{ form_row(formProfilInfoView.city) }}</div>
-                                </div>
-
-                                {{ form_end(formProfilInfoView) }}
-                        
-                            </div>
-                        </div>
-                       
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-12 col-lg-8 my-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <ul class="nav nav-pills m-1" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link nav-primary active" id="skill-tab" data-bs-toggle="tab" data-bs-target="#skill" type="button" role="tab" aria-controls="skill" aria-selected="true">Compétences</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link nav-primary" id="missions-tab" data-bs-toggle="tab" data-bs-target="#missions" type="button" role="tab" aria-controls="missions" aria-selected="false">Historique des missions</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link nav-primary" id="fichiers-tab" data-bs-toggle="tab" data-bs-target="#fichiers" type="button" role="tab" aria-controls="fichiers" aria-selected="false">Fichiers</button>
+                        </li>
+                        <li class="nav-item ms-auto" role="presentation">
+                            <button class="nav-link nav-primary" id="parameter-tab" data-bs-toggle="tab" data-bs-target="#parameter" type="button" role="tab" aria-controls="parameter" aria-selected="false">Paramètres</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content mt-3" id="myTabContent">
+                <div class="tab-pane fade show active" id="skill" role="tabpanel" aria-labelledby="skill-tab">
+                    
+                    <!-- Ajouter des Compétences-->
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseSkillForm" role="button" aria-expanded="false" aria-controls="collapseSkillForm">
+                                    <h5 class="m-3">Ajouter une compétence</h5>
+                                </div>
+                                    <div class="card-body p-4 collapse" id="collapseSkillForm">
+                                    {{ form_start(formAddSkillView) }}
+                                    <div class="row">
+                                        <div class="col-12 col-xl">{{ form_row(formAddSkillView.skill) }}</div>
+                                        <div class="col-12 col-xl">{{ form_row(formAddSkillView.apprecied) }}</div>
+                                        <div class="col-12 col-xl">{{ form_row(formAddSkillView.level) }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><button type="submit" class="btn btn-primary">Ajouter la compétence</button></div>
+                                    </div>
+                                    {{ form_end(formAddSkillView) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% for category in categories %}
+                        <div class="row mb-3 g-3">
+
+                            <div class="col-12">
+                                <h4 class="mt-2 mb-0">{{ category.name }}</h4>
+                            </div>
+
+                            {% for skill in profil.userSkills %}
+                                {% if category.name == skill.skill.category.name %}
+                                    <div class="col-12 col-md-6 col-xl-4">
+                                        <div class="card">
+                                            <div class="card-body">
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h4 class="fs-5">
+                                                            {{ skill.skill.name }}
+
+                                                            {% if skill.apprecied == true %}
+                                                                <i class="fas fa-fw fa-heart grape-2"></i>
+                                                            {% endif %}
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-auto text-end">
+                                                        <a class="blue-3 mx-1" href="{{ path ('user_skills_edit', {'user_skill_id': skill.id})}}"><i class="far fa-edit"></i></a>
+                                                        <a class="grape-3" href="{{ path ('user_skills_delete', {'user_skill_id': skill.id})}}"><i class="far fa-times"></i></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-2">
+                                                    <div class="col">
+                                                        <div class="progress" style="height: 1.5em;">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ (skill.level / 5) * 100 }}%" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="5">{{ skill.level }} / 5</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                    {% endfor %}
+
+                    
+                
+                </div>
+                <div class="tab-pane fade" id="missions" role="tabpanel" aria-labelledby="missions-tab">
+
+
+                    <!-- Ajouter Une Expérience-->
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseExpForm" role="button" aria-expanded="false" aria-controls="collapseExpForm">
+                                    <h5 class="m-3">Ajouter une expérience</h5>
+                                </div>
+                                <div class="card-body p-4 collapse" id="collapseExpForm">
+                                    {{ form_start(formAddExperrienceView) }}
+                                    <div class="row">
+                                        <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.startDate) }}</div>
+                                        <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.endDate) }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.title) }}</div>
+                                        <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.Entreprise) }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-xl">{{ form_row(formAddExperrienceView.description) }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><button type="submit" class="btn btn-primary">Ajouter l'expérience</button></div>
+                                    </div>
+                                    {{ form_end(formAddExperrienceView) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expériences -->
+                    <div class="row d-flex flex-column-reverse">
+                        {% for experience in experiences %}
+                            <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="mb-0"><i class="far fa-starship"></i> {{ experience.entreprise.name }}</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="mb-0"><i class="far fa-calendar-alt"></i> Du <span class="dg-1">{{ experience.startDate|date('d-m-Y') }}</span> au <span class="dg-1">{{ experience.endDate|date('d-m-Y') }}</span></p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a class="blue-3 mx-1" href="{{ path ('experience_edit', {'id_exp': experience.id})}}"><i class="far fa-edit"></i></a>
+                                                <a class="grape-3 mx-1" href="{{ path ('experience_delete', {'id_exp': experience.id})}}"><i class="far fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h6><i class="far fa-id-card-alt"></i> {{ experience.title }}</h6>
+                                        <p>{{ experience.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="fichiers" role="tabpanel" aria-labelledby="fichiers-tab">
+                    
+                    <!-- Ajouter un Document -->
+                    <!-- Sources : https://symfony.com/doc/current/controller/upload_file.html -->
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header card-header-action" data-bs-toggle="collapse" href="#collapseExpForm" role="button" aria-expanded="false" aria-controls="collapseExpForm">
+                                    <h5 class="m-3">Ajouter un Document</h5>
+                                </div>
+                                <div class="card-body p-4 collapse" id="collapseExpForm">
+                                    {{ form_start(formAddDocumentView) }}
+                                        {{ form_row(formAddDocumentView.file) }}
+                                        {{ form_row(formAddDocumentView.name) }}
+                                    {{ form_end(formAddDocumentView) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        <!-- Documents -->
+                    <div class="row d-flex flex-column-reverse">
+                        {% for document in profil.documents %}
+                            <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <p class="mb-0 d-flex align-items-center">
+
+                                            <!-- Fichié renomé ou non -->
+                                            {% if document.name %}
+                                            <i class="far fa-file fa-fw me-1"></i> {{ document.name }} 
+                                            {% else %}
+                                            <i class="far fa-file fa-fw me-1"></i> {{ document.file }} 
+                                            {% endif %}
+
+                                            <span class="text-muted ms-1"> - Ajouté le {{ document.createdAt|date('d/m/Y') }}</span> 
+                                            <a class="blue-3 ms-auto" href="{{ asset('uploads/documents/' ~ document.file) }}">
+                                                <i class="far fa-eye"></i> coup d'oeil
+                                            </a>
+                                            <a class="grape-3 ms-1" href="{{ path ('document_delete', {'document_id': document.id})}}"><i class="far fa-times fa-fw"></i></a>
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="parameter" role="tabpanel" aria-labelledby="parameter-tab">
+                
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h4 class="m-3">Modifier mes informations</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            
+                            {# Form de modification #}
+                            {{ form_start(formProfilInfoView) }}
+
+                            <div class="row">
+                                <div class="col">{{ form_row(formProfilInfoView.firstname) }}</div>
+                                <div class="col">{{ form_row(formProfilInfoView.lastname) }}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">{{ form_row(formProfilInfoView.status) }}</div>
+                                <div class="col">{{ form_row(formProfilInfoView.jobTitle) }}</div>
+                                <div class="col">{{ form_row(formProfilInfoView.disponibility) }}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">{{ form_row(formProfilInfoView.email) }}</div>
+                                <div class="col">{{ form_row(formProfilInfoView.phone) }}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">{{ form_row(formProfilInfoView.adresse) }}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">{{ form_row(formProfilInfoView.zip_code) }}</div>
+                                <div class="col">{{ form_row(formProfilInfoView.city) }}</div>
+                            </div>
+
+                            {{ form_end(formProfilInfoView) }}
+                    
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
     </div>
+    
 {% endblock %}

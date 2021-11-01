@@ -34,6 +34,11 @@
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li>
+								<a class="dropdown-item" href="{{ path('search') }}">
+									<i class="far fa-search fa-fw"></i>
+									Rechercher</a>
+							</li>
+							<li>
 								<a class="dropdown-item" href="{{ path('collaborateurs') }}">
 									<i class="far fa-users fa-fw"></i>
 									Collaborateurs</a>
@@ -84,13 +89,24 @@
 		
 	</nav>
 </div>
+
+<!-- Recherche -->
 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
 <div class="container-fluid bg-white py-2">
 	<div class="container">
-		<form class="d-flex">
-			<input class="form-control me-2 border-0 py-3" type="search" placeholder="Rechercher par Nom, Compétence, Entreprise..." aria-label="Rechercher">
-			<button class="btn btn-outline-secondary my-2 px-4" type="submit">Rechercher</button>
-		</form>
+
+
+		{# {{ render(controller(
+			'App\\Controller\\SearchController::searchBar'
+		)) }}  #}
+
+		{# {{ form_start(searchFormView) }}
+			<div class="row">
+				<div class="col">{{ form_row(searchFormView.search) }}</div>
+				<div class="col-auto"><button class="btn btn-outline-secondary my-2 px-4" type="submit">Rechercher</button></div>
+			</div>
+		{{ form_end(searchFormView) }} #}
+
 	</div>
 </div>
 {% endif %}

@@ -39,7 +39,7 @@ class Experience
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="experiences, nullable=true")
+     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="experiences")
      */
     private $Entreprise;
 

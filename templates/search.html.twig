@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+
+    <!-- Recherche -->
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+    <div class="container-fluid bg-white py-2">
+        <div class="container">
+            {{ form_start(searchFormView) }}
+                <div class="row d-flex align-items-end">
+                    <div class="col">{{ form_row(searchFormView.search) }}</div>
+                    <div class="col-auto"><button class="btn btn-primary form-control my-3 px-5 py-3" type="submit">Rechercher</button></div>
+                </div>
+            {{ form_end(searchFormView) }}
+        </div>
+    </div>
+    {% endif %}
+
+    
+    {# {% if user %}
+        <!-- En tête tableau -->
+        <div class="row my-2 py-1">
+            <div class="col-1"></div>
+            <div class="col">
+                <span class="fw-bold">Disponibilité | Prénom Nom</span>
+            </div>
+            <div class="col">
+                <span class="fw-bold">Poste</span>
+            </div>
+            <div class="col">
+                <span class="fw-bold">Email</span>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        {% for u in user %}
+            
+            <!-- Row Skill -->
+            <div class="row d-flex align-items-center my-2 py-1 rounded table-row">
+                <div class="col-1">
+                    <img src="{{ u.pictureUrl }}" alt="{{ u.firstname }} {{ u.lastname }}" class="table-img">
+                </div>
+                <div class="col">
+                    {% if u.disponibility %}
+                        <span class="grass-3 me-1"><i class="fas fa-circle"></i></span>
+                    {% else %}
+                        <span class="grape-3 me-1"><i class="fas fa-circle"></i></span>
+                    {% endif %}
+                    {{ u.firstname }} {{ u.lastname }}
+                </div>
+                <div class="col">
+                    {{ u.jobTitle }}
+                </div>
+                <div class="col">
+                    {{ u.email }}
+                </div>
+                <div class="col text-end">
+                    <a class="blue-3 mx-1" href="{{ path('profil', {'id': u.id}) }}"><i class="far fa-user-tag"></i></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a class="grape-3 mx-1" href="{{ path ('candidats_delete', {'id': u.id})}}"><i class="far fa-user-times"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            
+        {% endfor %}
+
+    {% else %}
+        <p>coucou</p>
+    {% endif %} #}
+
+{% endblock %}
+
