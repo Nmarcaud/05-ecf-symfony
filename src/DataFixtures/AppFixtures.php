@@ -9,6 +9,9 @@ use App\Entity\Status;
 use App\Entity\Category;
 use App\Entity\Entreprise;
 use App\Entity\Experience;
+use App\Entity\UserSkill;
+use App\Repository\SkillRepository;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -33,6 +36,83 @@ class AppFixtures extends Fixture
         // Plus de pertinence pour les expériences et entreprises
         $faker->addProvider(new \Bezhanov\Faker\Provider\Educator($faker));
         $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
+
+
+        // Autres Type de Users - On sait jamais !
+        $status = new Status;
+        $status->setName("Autre");
+        $manager->persist($status);
+
+
+        // Liste Skills pour UserSkills
+        $skills = array();
+
+        // Compétences & Catégories
+        $category = new Category;
+        $category->setName('Front')->setCreatedAt($faker->dateTime());
+        $manager->persist($category);
+
+            $skill = new Skill;
+            $skill->setName('Javascript')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('HTML')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('CSS')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Bootstrap')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+        
+        // Compétences & Catégories
+        $category = new Category;
+        $category->setName('Back')->setCreatedAt($faker->dateTime());
+        $manager->persist($category);
+
+            $skill = new Skill;
+            $skill->setName('Php')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Ruby')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Python')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('NodeJS')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            
+        // Compétences & Catégories
+        $category = new Category;
+        $category->setName('CMS')->setCreatedAt($faker->dateTime());
+        $manager->persist($category);
+
+            $skill = new Skill;
+            $skill->setName('Wordpress')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Cardstack')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Prestashop')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+            $skill = new Skill;
+            $skill->setName('Shopify')->setCreatedAt($faker->dateTime())->setCategory($category);
+            array_push($skills, $skill);
+            $manager->persist($skill);
+
 
 
         // Entreprises
@@ -70,8 +150,12 @@ class AppFixtures extends Fixture
                 $manager->persist($experience);
             }
         }
-        
 
+
+
+
+        // Liste Users pour UserSkills
+        $users = array();
 
         // Admin
         // Création Status Administrateur
@@ -100,6 +184,7 @@ class AppFixtures extends Fixture
         ->setApsideBirthday($faker->dateTime())
         ->setDisponibility(rand(0,1));
 
+        array_push($users, $admin);
         $manager->persist($admin);
 
         // Ajout d'expériences Random
@@ -138,10 +223,57 @@ class AppFixtures extends Fixture
 
             // Ajout d'expériences Random
             addXp($faker, $user, $manager, $listEntreprises);
-            
+
+            array_push($users, $user);
             $manager->persist($user);
         }
-
+        // Nouveau Collaborateur
+        for ($u = 0; $u < 2; $u++) { 
+            $user = new User();
+            $hash = $this->encoder->hashPassword($user, "password");
+            $user->setFirstname($faker->firstName())
+                ->setLastname($faker->lastName())
+                ->setEmail("collaborateur_new_$u@gmail.com")
+                ->setPassword($hash)
+                ->setJobTitle($faker->jobTitle())
+                ->setRoles(['ROLE_COLLABORATEUR'])
+                ->setAdresse($faker->streetAddress())
+                ->setZipCode($faker->postcode())
+                ->setCity($faker->city())
+                ->setPhone($faker->phoneNumber())
+                ->setStatus($status)
+                ->setPictureUrl($faker->imageUrl(300, 300, true))
+                ->setCreatedAt(new \DateTime())
+                ->setApsideBirthday($faker->dateTime())
+                ->setDisponibility(rand(0, 1));
+            addXp($faker, $user, $manager, $listEntreprises);
+            array_push($users, $user);
+            $manager->persist($user);
+        }
+        // Collaborateurs Modifiés
+        for ($u = 0; $u < 2; $u++) { 
+            $user = new User();
+            $hash = $this->encoder->hashPassword($user, "password");
+            $user->setFirstname($faker->firstName())
+                ->setLastname($faker->lastName())
+                ->setEmail("collaborateur_modify_$u@gmail.com")
+                ->setPassword($hash)
+                ->setJobTitle($faker->jobTitle())
+                ->setRoles(['ROLE_COLLABORATEUR'])
+                ->setAdresse($faker->streetAddress())
+                ->setZipCode($faker->postcode())
+                ->setCity($faker->city())
+                ->setPhone($faker->phoneNumber())
+                ->setStatus($status)
+                ->setPictureUrl($faker->imageUrl(300, 300, true))
+                ->setModifiedAt(new \DateTime())
+                ->setCreatedAt($faker->dateTime())
+                ->setApsideBirthday($faker->dateTime())
+                ->setDisponibility(rand(0, 1));
+            addXp($faker, $user, $manager, $listEntreprises);
+            array_push($users, $user);
+            $manager->persist($user);
+        }
 
 
         // Commerciaux
@@ -175,12 +307,12 @@ class AppFixtures extends Fixture
 
             // Ajout d'expériences Random
             addXp($faker, $user, $manager, $listEntreprises);
-            
+
+            array_push($users, $user);
             $manager->persist($user);
         }
 
-
-
+       
         // Candidats
         // Création Status Candidat
         $status = new Status;
@@ -212,75 +344,61 @@ class AppFixtures extends Fixture
 
             // Ajout d'expériences Random
             addXp($faker, $user, $manager, $listEntreprises);
-            
+            array_push($users, $user);
             $manager->persist($user);
         }
 
-        // Autres Type de Users - On sait jamais !
-        $status = new Status;
-        $status->setName("Autre");
-        $manager->persist($status);
-
-
-        // Compétences & Catégories
-        $category = new Category;
-        $category->setName('Front')->setCreatedAt($faker->dateTime());
-        $manager->persist($category);
-
-            $skill = new Skill;
-            $skill->setName('Javascript')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('HTML')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('CSS')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('Bootstrap')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-        
-        // Compétences & Catégories
-        $category = new Category;
-        $category->setName('Back')->setCreatedAt($faker->dateTime());
-        $manager->persist($category);
-
-            $skill = new Skill;
-            $skill->setName('Php')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('Ruby')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('Python')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('NodeJS')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            
-        // Compétences & Catégories
-        $category = new Category;
-        $category->setName('CMS')->setCreatedAt($faker->dateTime());
-        $manager->persist($category);
-
-            $skill = new Skill;
-            $skill->setName('Wordpress')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('Cardstack')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('Prestashop')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-            $skill = new Skill;
-            $skill->setName('Shopify')->setCreatedAt($faker->dateTime())->setCategory($category);
-            $manager->persist($skill);
-
-        $manager->flush();
+        for ($u = 0; $u < 2; $u++) {
+            // Nouveau Candidat
+            $user = new User();
+            $hash = $this->encoder->hashPassword($user, "password");
+            $user->setFirstname($faker->firstName())
+                ->setLastname($faker->lastName())
+                ->setEmail("candidat_new_$u@gmail.com")
+                ->setPassword($hash)
+                ->setJobTitle($faker->jobTitle())
+                ->setRoles(['ROLE_CANDIDAT'])
+                ->setAdresse($faker->streetAddress())
+                ->setZipCode($faker->postcode())
+                ->setCity($faker->city())
+                ->setPhone($faker->phoneNumber())
+                ->setStatus($status)
+                ->setPictureUrl($faker->imageUrl(300, 300, true))
+                ->setCreatedAt(new \DateTime())
+                ->setApsideBirthday($faker->dateTime())
+                ->setDisponibility(rand(0, 1));
+    
+            // Ajout d'expériences Random
+            addXp($faker, $user, $manager, $listEntreprises);
+            array_push($users, $user);
+            $manager->persist($user);
+        }
 
 
 
         // Ajout User_Skill
+        
+        foreach ($users as $user) {
+
+            // réinitialise la liste
+            $listSkills = $skills;
+
+            $nbSkills = rand(1, 6);
+            for ($e = 1; $e <= $nbSkills; $e++) {
+
+                $countSkills = count($listSkills)-1;
+                $randSkill = rand(0, $countSkills);
+                // Attribut un skill aléatoire
+                $skill = $listSkills[$randSkill];
+                // retire le skill de la liste er ré-index la liste
+                array_splice($listSkills, $randSkill, 1); 
+
+                $userSkill = new UserSkill;
+                $userSkill->setUser($user)->setSkill($skill)->setCreatedAt($faker->dateTime())->setLevel(rand(1,5))->setApprecied(rand(0,1));
+                $manager->persist($userSkill);
+            }
+        }
+        $manager->flush();
 
 
     }

@@ -119,6 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $disponibility;
 
+
     public function __construct()
     {
         $this->experiences = new ArrayCollection();
@@ -466,4 +467,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }

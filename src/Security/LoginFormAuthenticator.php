@@ -56,7 +56,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         // If Admin -> Dashboard
         if (in_array("ROLE_ADMIN", $user->getRoles()) || in_array("ROLE_COMMERCIAL", $user->getRoles())) {
-            return new RedirectResponse('/');
+            return new RedirectResponse($this->urlGenerator->generate('dashboard'));
 
         // Else -> Profile
         } else {
